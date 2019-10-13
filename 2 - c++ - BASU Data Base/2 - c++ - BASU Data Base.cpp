@@ -51,6 +51,7 @@ void SortByName();
 void SortByID();
 void Save();
 
+void commandConverter(string , vector <string>&);
 
 int main()
 {
@@ -66,6 +67,43 @@ void Start()
 		string command;
 		getline(cin, command);
 		
-		
+		//convert the command into several parts in vector
+		vector <string> commandVec;
+		commandConverter(command, commandVec);
+
+	}
+}
+
+void commandConverter(string _command, vector <string>& commandVec)
+{
+	while (true)
+	{
+		//if all characters are checked, exit
+		int letterCounter = 0;
+		for (char letter : _command)
+		{
+			if (letter != '0') {
+				letterCounter++;
+				break;
+			}
+		}
+		if (letterCounter == 0)
+			return;
+
+		//extract the words from the command and push them in the vector
+		string word;
+		for (char& letter : _command)
+			if (letter == '0')
+				continue;
+			else if (letter == ' ') {
+				letter = '0';
+				break;
+			}
+			else {
+				word += letter;
+				letter = '0';
+			}
+		if (word.size() > 0)
+			commandVec.push_back(word);
 	}
 }
