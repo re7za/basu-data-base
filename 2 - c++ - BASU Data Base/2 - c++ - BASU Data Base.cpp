@@ -11,7 +11,9 @@
 #include <vector>
 #include <string>
 
-vector <Class> Database;
+using namespace std;
+
+//vector <Class> Database;
 
 struct Date
 {
@@ -49,9 +51,21 @@ void SortByName();
 void SortByID();
 void Save();
 
+
 int main()
 {
-	int a;
-
+	Start();
 	return 0;
+}
+
+void Start()
+{
+	//Continue until the user exits
+	while (true)
+	{
+		string command;
+		getline(cin, command);
+		
+		
+	}
 }
