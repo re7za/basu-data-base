@@ -71,6 +71,7 @@ void Start();
 void SelectClass(string);
 void AddClass(string);
 void RemoveClass(string);
+void RemoveClass();
 void AddStudent(string, Date, unsigned long long int, float);
 void RemoveStudent(unsigned long long int);
 void Search(unsigned long long int);
@@ -81,6 +82,7 @@ void SortByName();
 void SortByID();
 void Save();
 void Help();
+void Rank();
 
 
 void templatePrinter();
@@ -88,7 +90,7 @@ void commandSpliter(string, vector <string>&);
 void commandModifire(string&, vector <string>&);
 int getIndexOfArea(string);
 void toLowerCase(string&);
-void runCommand(int);
+void runCommand(int, string);
 
 
 
@@ -122,7 +124,7 @@ void Start()
 			continue;
 		}
 		else
-			runCommand(mainPartIndex);
+			runCommand(mainPartIndex, commandVec[commandVec.size() - 1]);
 	}
 }
 
@@ -225,42 +227,49 @@ void toLowerCase(string& _command)
 		if (letter >= 65 && letter <= 90)
 			letter += 32;
 }
-void runCommand(int index)
+void runCommand(int index, string argument)
 {
 	if (selector == mainArea)
 		switch (index)
 		{
-		//basu add class
+		//basu add class <File Name>
 		case 0: {
-
+			AddClass(argument);
+			break;
 		}
-		//basu remove class
+		//basu remove class <Class Name>
 		case 1: {
-
+			RemoveClass(argument);
+			break;
 		}
-		//basu select class
+		//basu select class <Class Name>
 		case 2: {
-
+			SelectClass(argument);
+			break;
 		}
-		//basu show
+		//basu show <Class Name> or nothing
 		case 3: {
-
+			if (argument == "show")
+				ShowAll();
+			else
+				ShowClass(argument);
+			break;
 		}
 		//basu save
 		case 4: {
-
+			Save();
 		}
 		//basu help
 		case 5: {
-
+			Help();
 		}
 		//basu rank
 		case 6: {
-
+			Rank();
 		}
 		//exit
 		case 7: {
-
+			return;
 		}
 		}
 	else if (selector == classArea)
@@ -268,13 +277,14 @@ void runCommand(int index)
 		{
 		//basu select none
 		case 0: {
-
+			selector = mainArea;
+			break;
 		}
-		//basu remove student
+		//basu remove student <ID>
 		case 1: {
 
 		}
-		//basu search
+		//basu search <ID> or <Full Name>
 		case 2: {
 
 		}
@@ -284,34 +294,35 @@ void runCommand(int index)
 		}
 		//basu sort name
 		case 4: {
-
+			SortByName();
 		}
 		//basu sort id
 		case 5: {
-
+			SortByID();
 		}
 		//basu save
 		case 6: {
-
+			Save();
 		}
 		//basu help
 		case 7: {
-
-		}//basu rank
+			Help();
+		}
+		//basu rank
 		case 8: {
-
+			Rank();
 		}
 		//basu remove class
 		case 9: {
-
+			RemoveClass();
 		}
-		//basu select class
+		//basu select class <Class Name>
 		case 10: {
-
+			SelectClass(argument);
 		}
 		//exit
 		case 11: {
-
+			return;
 		}
 		}
 	else
