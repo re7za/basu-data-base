@@ -88,7 +88,7 @@ void commandSpliter(string, vector <string>&);
 void commandModifire(string&, vector <string>&);
 int getIndexOfArea(string);
 void toLowerCase(string&);
-void runCommand(int, string ,const vector <string>&);
+void runCommand(int);
 
 
 
@@ -122,7 +122,7 @@ void Start()
 			continue;
 		}
 		else
-			runCommand(mainPartIndex, command, commandVec);
+			runCommand(mainPartIndex);
 	}
 }
 
@@ -225,9 +225,100 @@ void toLowerCase(string& _command)
 		if (letter >= 65 && letter <= 90)
 			letter += 32;
 }
-void runCommand(int index, string command, const vector <string>& commandVec)
+void runCommand(int index)
 {
-	
+	if (selector == mainArea)
+		switch (index)
+		{
+		//basu add class
+		case 0: {
+
+		}
+		//basu remove class
+		case 1: {
+
+		}
+		//basu select class
+		case 2: {
+
+		}
+		//basu show
+		case 3: {
+
+		}
+		//basu save
+		case 4: {
+
+		}
+		//basu help
+		case 5: {
+
+		}
+		//basu rank
+		case 6: {
+
+		}
+		//exit
+		case 7: {
+
+		}
+		}
+	else if (selector == classArea)
+		switch (index)
+		{
+		//basu select none
+		case 0: {
+
+		}
+		//basu remove student
+		case 1: {
+
+		}
+		//basu search
+		case 2: {
+
+		}
+		//basu show
+		case 3: {
+
+		}
+		//basu sort name
+		case 4: {
+
+		}
+		//basu sort id
+		case 5: {
+
+		}
+		//basu save
+		case 6: {
+
+		}
+		//basu help
+		case 7: {
+
+		}//basu rank
+		case 8: {
+
+		}
+		//basu remove class
+		case 9: {
+
+		}
+		//basu select class
+		case 10: {
+
+		}
+		//exit
+		case 11: {
+
+		}
+		}
+	else
+	{
+		cout << "somthing wrong with selector" << endl;
+		return;
+	}
 }
 
 
