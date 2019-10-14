@@ -19,7 +19,7 @@ using namespace std;
 enum area {mainArea, classArea};
 int selector = mainArea;
 const short int mainAreaCommandsNumber = 8;
-string mainAreaCommands[mainAreaCommandsNumber] = {
+const string mainAreaCommands[mainAreaCommandsNumber] = {
 	"basu add class",
 	"basu remove class",
 	"basu select class",
@@ -30,7 +30,7 @@ string mainAreaCommands[mainAreaCommandsNumber] = {
 	"exit"
 };
 const short int classAreaCommandsNumber = 12;
-string classAreaCommands[classAreaCommandsNumber] = {
+const string classAreaCommands[classAreaCommandsNumber] = {
 	"basu select none",
 	"basu remove student",
 	"basu search",
@@ -80,11 +80,15 @@ void ShowAll();
 void SortByName();
 void SortByID();
 void Save();
+void Help();
 
-void commandConverter(string, vector <string>&);
-void modifiedCommand(string&, vector <string>&);
+
+void templatePrinter();
+void commandSpliter(string, vector <string>&);
+void commandModifire(string&, vector <string>&);
 bool isMainPartTrue(string _command);
 void toLowerCase(string&);
+void wrongMainPart();
 
 int main()
 {
@@ -97,25 +101,37 @@ void Start()
 	//Continue until the user exits
 	while (true)
 	{
+		//just to avoid crowding the function
+		templatePrinter();
+
 		string command;
 		getline(cin, command);
 		
 		//split the command into several parts in the vector
 		vector <string> commandVec;
-		commandConverter(command, commandVec);
+		commandSpliter(command, commandVec);
 		
 		//remove the extra spaces
-		modifiedCommand(command, commandVec);
+		commandModifire(command, commandVec);
 
-		if (!isMainPartTrue(command))
-			cout << "false!!!!!!" << endl << command << endl;
-		else
-			cout << "true!!!!!!!" << endl << command << endl;
-
+		if (!isMainPartTrue(command)) {
+			wrongMainPart();
+			continue;
+		}
 	}
 }
 
-void commandConverter(string _command, vector <string>& commandVec)
+void templatePrinter()
+{
+	cout << endl;
+	cout << "**enter the command...";
+	if (selector == mainArea)
+		cout << "in the Main Area...!" << endl;
+	else if (selector == classArea)
+		cout << "in the Class Area..." << setw(3) << "on class (<Class Name>) !" << endl;
+	cout << "-> ";
+}
+void commandSpliter(string _command, vector <string>& commandVec)
 {
 	while (true)
 	{
@@ -148,10 +164,11 @@ void commandConverter(string _command, vector <string>& commandVec)
 			commandVec.push_back(word);
 	}
 }
-void modifiedCommand(string& _command, vector <string>& commandVec)
+void commandModifire(string& _command,vector <string>& commandVec)
 {
 	_command = "";
-	for (int i = 0; i < commandVec.size(); i++) {
+	for (int i = 0; i < commandVec.size(); i++)
+	{
 		_command += commandVec[i];
 		if (i != commandVec.size() - 1)
 			_command += " ";
@@ -160,18 +177,36 @@ void modifiedCommand(string& _command, vector <string>& commandVec)
 bool isMainPartTrue(string _command)
 {
 	//is command main part entered true?? or false?
-
-	toLowerCase(_command);
-	for (const string& mainCommands : mainAreaCommands)
+	
+	if (selector == mainArea)
 	{
-		if (_command.size() < mainCommands.size())
-			continue;
-		int mistakeCounter = 0;
-		for (int i = 0; i < mainCommands.size(); i++)
-			if (mainCommands[i] != _command[i])
-				mistakeCounter++;
-		if (mistakeCounter == 0)
-			return true;
+		toLowerCase(_command);
+		for (const string& mainCommands : mainAreaCommands)
+		{
+			if (_command.size() < mainCommands.size())
+				continue;
+			int mistakeCounter = 0;
+			for (int i = 0; i < mainCommands.size(); i++)
+				if (mainCommands[i] != _command[i])
+					mistakeCounter++;
+			if (mistakeCounter == 0)
+				return true;
+		}
+	}
+	else if (selector == classArea)
+	{
+		toLowerCase(_command);
+		for (const string& mainCommands : classAreaCommands)
+		{
+			if (_command.size() < mainCommands.size())
+				continue;
+			int mistakeCounter = 0;
+			for (int i = 0; i < mainCommands.size(); i++)
+				if (mainCommands[i] != _command[i])
+					mistakeCounter++;
+			if (mistakeCounter == 0)
+				return true;
+		}
 	}
 	return false;
 }
@@ -181,4 +216,9 @@ void toLowerCase(string& _command)
 		if (letter >= 65 && letter <= 90)
 			letter += 32;
 }
+void wrongMainPart()
+{
+
+}
+
 
