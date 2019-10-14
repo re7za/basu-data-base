@@ -86,9 +86,11 @@ void Help();
 void templatePrinter();
 void commandSpliter(string, vector <string>&);
 void commandModifire(string&, vector <string>&);
-bool isMainPartTrue(string _command);
+int getIndexOfArea(string);
 void toLowerCase(string&);
-void wrongMainPart();
+void runCommand(int, string ,const vector <string>&);
+
+
 
 int main()
 {
@@ -106,25 +108,28 @@ void Start()
 
 		string command;
 		getline(cin, command);
-		
+
 		//split the command into several parts in the vector
 		vector <string> commandVec;
 		commandSpliter(command, commandVec);
-		
+
 		//remove the extra spaces
 		commandModifire(command, commandVec);
 
-		if (!isMainPartTrue(command)) {
-			wrongMainPart();
+		int mainPartIndex = getIndexOfArea(command);
+		if (mainPartIndex == -1) {
+			cout << "<<WRONG INPUT!!!>>" << "   " << "enter 'basu help' to show command list.." << endl;
 			continue;
 		}
+		else
+			runCommand(mainPartIndex, command, commandVec);
 	}
 }
 
 void templatePrinter()
 {
 	cout << endl;
-	cout << "**enter the command...";
+	cout << "**enter your command...";
 	if (selector == mainArea)
 		cout << "in the Main Area...!" << endl;
 	else if (selector == classArea)
@@ -136,7 +141,7 @@ void commandSpliter(string _command, vector <string>& commandVec)
 	while (true)
 	{
 		//if all characters are checked, exit
-		int letterCounter = 0;
+		size_t letterCounter = 0;
 		for (char letter : _command)
 		{
 			if (letter != '0') {
@@ -167,48 +172,52 @@ void commandSpliter(string _command, vector <string>& commandVec)
 void commandModifire(string& _command,vector <string>& commandVec)
 {
 	_command = "";
-	for (int i = 0; i < commandVec.size(); i++)
+	for (size_t i = 0; i < commandVec.size(); i++)
 	{
 		_command += commandVec[i];
 		if (i != commandVec.size() - 1)
 			_command += " ";
 	}
 }
-bool isMainPartTrue(string _command)
+int getIndexOfArea(string _command)
 {
 	//is command main part entered true?? or false?
 	
 	if (selector == mainArea)
 	{
 		toLowerCase(_command);
+		int index = 0;
 		for (const string& mainCommands : mainAreaCommands)
 		{
 			if (_command.size() < mainCommands.size())
 				continue;
-			int mistakeCounter = 0;
-			for (int i = 0; i < mainCommands.size(); i++)
-				if (mainCommands[i] != _command[i])
+			size_t mistakeCounter = 0;
+			for (size_t j = 0; j < mainCommands.size(); j++)
+				if (mainCommands[j] != _command[j])
 					mistakeCounter++;
 			if (mistakeCounter == 0)
-				return true;
+				return index;
+			index++;
 		}
 	}
 	else if (selector == classArea)
 	{
 		toLowerCase(_command);
+		int index = 0;
 		for (const string& mainCommands : classAreaCommands)
 		{
 			if (_command.size() < mainCommands.size())
 				continue;
-			int mistakeCounter = 0;
-			for (int i = 0; i < mainCommands.size(); i++)
+			size_t mistakeCounter = 0;
+			for (size_t i = 0; i < mainCommands.size(); i++)
 				if (mainCommands[i] != _command[i])
 					mistakeCounter++;
 			if (mistakeCounter == 0)
-				return true;
+				return index;
+			index++;
 		}
 	}
-	return false;
+	return -1;
 }
 void toLowerCase(string& _command)
 {
@@ -216,9 +225,9 @@ void toLowerCase(string& _command)
 		if (letter >= 65 && letter <= 90)
 			letter += 32;
 }
-void wrongMainPart()
+void runCommand(int index, string command, const vector <string>& commandVec)
 {
-
+	
 }
 
 
