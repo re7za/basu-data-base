@@ -15,6 +15,32 @@ using namespace std;
 
 //vector <Class> Database;
 
+const short int mainAreaCommandsNumber = 7;
+string mainAreaCommands[mainAreaCommandsNumber] = {
+	"basu add class",
+	"basu remove class",
+	"basu select class",
+	"basu show",
+	"basu save",
+	"basu help",
+	"basu rank"
+};
+const short int classAreaCommandsNumber = 11;
+string classAreaCommands[classAreaCommandsNumber] = {
+	"basu select none",
+	"basu remove student",
+	"basu search",
+	"basu show",
+	"basu sort name",
+	"basu sort id",
+	"basu save",
+	"basu help",
+	"basu rank",
+	"basu remove class",
+	"basu select class"
+};
+
+
 struct Date
 {
 	unsigned short int Year;
@@ -72,9 +98,19 @@ void Start()
 		vector <string> commandVec;
 		commandConverter(command, commandVec);
 
+		//the main part of command should not be casesensitive
 		//convert the command to lowercase... except the last word
 		for (int i = 0; i < commandVec.size() - 1; i++)
 			toLowerCase(commandVec[i]);
+
+		string commandMainPart;
+		for (int i = 0; i < commandVec.size() - 1; i++) {
+			commandMainPart += commandVec[i];
+			if (i != commandVec.size() - 2)
+				commandMainPart += " ";
+		}
+
+		cout << commandMainPart << "///" << commandMainPart.size() << endl;
 
 
 	}
@@ -116,10 +152,7 @@ void commandConverter(string _command, vector <string>& commandVec)
 void toLowerCase(string& _command)
 {
 	for (char& letter : _command)
-	{
 		if (letter >= 65 && letter <= 90)
 			letter += 32;
-	}
-
 }
 
