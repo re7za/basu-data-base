@@ -15,7 +15,10 @@ using namespace std;
 
 //vector <Class> Database;
 
-const short int mainAreaCommandsNumber = 7;
+//the commands bank must be accessible everywhere
+enum area {mainArea, classArea};
+int selector = mainArea;
+const short int mainAreaCommandsNumber = 8;
 string mainAreaCommands[mainAreaCommandsNumber] = {
 	"basu add class",
 	"basu remove class",
@@ -23,9 +26,10 @@ string mainAreaCommands[mainAreaCommandsNumber] = {
 	"basu show",
 	"basu save",
 	"basu help",
-	"basu rank"
+	"basu rank",
+	"exit"
 };
-const short int classAreaCommandsNumber = 11;
+const short int classAreaCommandsNumber = 12;
 string classAreaCommands[classAreaCommandsNumber] = {
 	"basu select none",
 	"basu remove student",
@@ -37,9 +41,9 @@ string classAreaCommands[classAreaCommandsNumber] = {
 	"basu help",
 	"basu rank",
 	"basu remove class",
-	"basu select class"
+	"basu select class",
+	"exit"
 };
-
 
 struct Date
 {
@@ -77,7 +81,9 @@ void SortByName();
 void SortByID();
 void Save();
 
-void commandConverter(string , vector <string>&);
+void commandConverter(string, vector <string>&);
+void modifiedCommand(string&, vector <string>&);
+bool isMainPartTrue(string _command);
 void toLowerCase(string&);
 
 int main()
@@ -94,17 +100,17 @@ void Start()
 		string command;
 		getline(cin, command);
 		
-		//convert the command into several parts in vector
+		//split the command into several parts in the vector
 		vector <string> commandVec;
 		commandConverter(command, commandVec);
+		
+		//remove the extra spaces
+		modifiedCommand(command, commandVec);
 
-		//the main part of command should not be casesensitive
-		//convert the command to lowercase... except the last word
-		for (int i = 0; i < commandVec.size() - 1; i++)
-			toLowerCase(commandVec[i]);
-
-
-
+		if (!isMainPartTrue(command))
+			cout << "false!!!!!!" << endl << command << endl;
+		else
+			cout << "true!!!!!!!" << endl << command << endl;
 
 	}
 }
@@ -141,6 +147,33 @@ void commandConverter(string _command, vector <string>& commandVec)
 		if (word.size() > 0)
 			commandVec.push_back(word);
 	}
+}
+void modifiedCommand(string& _command, vector <string>& commandVec)
+{
+	_command = "";
+	for (int i = 0; i < commandVec.size(); i++) {
+		_command += commandVec[i];
+		if (i != commandVec.size() - 1)
+			_command += " ";
+	}
+}
+bool isMainPartTrue(string _command)
+{
+	//is command main part entered true?? or false?
+
+	toLowerCase(_command);
+	for (const string& mainCommands : mainAreaCommands)
+	{
+		if (_command.size() < mainCommands.size())
+			continue;
+		int mistakeCounter = 0;
+		for (int i = 0; i < mainCommands.size(); i++)
+			if (mainCommands[i] != _command[i])
+				mistakeCounter++;
+		if (mistakeCounter == 0)
+			return true;
+	}
+	return false;
 }
 void toLowerCase(string& _command)
 {
