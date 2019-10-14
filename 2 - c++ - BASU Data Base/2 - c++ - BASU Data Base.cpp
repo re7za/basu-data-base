@@ -52,6 +52,7 @@ void SortByID();
 void Save();
 
 void commandConverter(string , vector <string>&);
+void toLowerCase(string&);
 
 int main()
 {
@@ -70,6 +71,11 @@ void Start()
 		//convert the command into several parts in vector
 		vector <string> commandVec;
 		commandConverter(command, commandVec);
+
+		//convert the command to lowercase... except the last word
+		for (int i = 0; i < commandVec.size() - 1; i++)
+			toLowerCase(commandVec[i]);
+
 
 	}
 }
@@ -107,3 +113,13 @@ void commandConverter(string _command, vector <string>& commandVec)
 			commandVec.push_back(word);
 	}
 }
+void toLowerCase(string& _command)
+{
+	for (char& letter : _command)
+	{
+		if (letter >= 65 && letter <= 90)
+			letter += 32;
+	}
+
+}
+
