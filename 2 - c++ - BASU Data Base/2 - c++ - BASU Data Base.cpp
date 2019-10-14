@@ -103,14 +103,7 @@ void Start()
 		for (int i = 0; i < commandVec.size() - 1; i++)
 			toLowerCase(commandVec[i]);
 
-		string commandMainPart;
-		for (int i = 0; i < commandVec.size() - 1; i++) {
-			commandMainPart += commandVec[i];
-			if (i != commandVec.size() - 2)
-				commandMainPart += " ";
-		}
 
-		cout << commandMainPart << "///" << commandMainPart.size() << endl;
 
 
 	}
