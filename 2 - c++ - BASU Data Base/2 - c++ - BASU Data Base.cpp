@@ -15,9 +15,13 @@ using namespace std;
 
 //vector <Class> Database;
 
-//the commands bank must be accessible everywhere
 enum area {mainArea, classArea};
 int selector = mainArea;
+
+vector <Class> _class;
+string thisClass;
+
+//the commands bank must be accessible everywhere
 const short int mainAreaCommandsNumber = 8;
 const string mainAreaCommands[mainAreaCommandsNumber] = {
 	"basu add class",
@@ -70,7 +74,7 @@ struct Class
 
 void Start();
 void SelectClass(string);
-void AddClass(string, vector <Class>& _class);
+void AddClass(string);
 void RemoveClass(string);
 void RemoveClass();
 void AddStudent(string, Date, unsigned long long int, float);
@@ -91,8 +95,8 @@ void commandSpliter(string, vector <string>&);
 void commandModifire(string&, vector <string>&);
 int getIndexOfArea(string);
 void toLowerCase(string&);
-void runCommand(int, string, vector <Class>&);
-
+void runCommand(int, string);
+void birthDay(string, Date&);
 
 
 int main()
@@ -105,12 +109,10 @@ void Start()
 {
 	cout << "Wellcome to 'BASU DATA BASE'" << endl;
 
-	vector <Class> _class;
-
 	//Continue until the user exits
 	while (true)
 	{
-		//just to avoid crowding the function
+		//just to avoid crowding this function
 		templatePrinter();
 
 		string command;
@@ -125,11 +127,11 @@ void Start()
 
 		int mainPartIndex = getIndexOfArea(command);
 		if (mainPartIndex == -1) {
-			cout << "<<WRONG INPUT!!!>>" << "   " << "enter 'basu help' to show command list.." << endl;
+			cout << "!? : " << "<<WRONG INPUT!!!>>" << "   " << "enter 'basu help' to show command list.." << endl;
 			continue;
 		}
 		else
-			runCommand(mainPartIndex, commandVec[commandVec.size() - 1], _class);
+			runCommand(mainPartIndex, commandVec[commandVec.size() - 1]);
 	}
 }
 
@@ -233,19 +235,19 @@ void toLowerCase(string& _command)
 		if (letter >= 65 && letter <= 90)
 			letter += 32;
 }
-void runCommand(int index, string argument, vector <Class>& _class)
+void runCommand(int index, string argument)
 {
 	if (selector == mainArea)
 		switch (index)
 		{
 		//basu add class <File Name>
 		case 0: {
-			AddClass(argument, _class);
+			AddClass(argument);
 			break;
 		}
 		//basu remove class <Class Name>
 		case 1: {
-			//RemoveClass(argument);
+			RemoveClass(argument);
 			break;
 		}
 		//basu select class <Class Name>
@@ -337,18 +339,85 @@ void runCommand(int index, string argument, vector <Class>& _class)
 		}
 	else
 	{
-		cout << "somthing wrong with selector" << endl;
+		cout << "!? : " << "somthing wrong with selector" << endl;
 		return;
 	}
 }
 
-void AddClass(string fileName, vector <Class>& _class)
+void AddClass(string fileName)
 {
-	Class newClass;
-	ifstream reader(fileName.c_str(), ios::in | ios::beg);
+	ifstream reader(fileName.c_str(), ios::beg);
 	if (!reader) {
-		cout << "<<SOMTHING WRONG!!!>>" << "   " << "file doesn't open!" << endl;
+		cout << "!? : " << "<<SOMTHING WRONG!!!>>" << "   " << "file doesn't exist!" << endl;
 		return;
 	}
+	
+	Class newClass;
+	Student newStud;
+	reader >> newClass.ClassName;
+	reader >> newClass.Capacity;
+	for (size_t i = 0; i < newClass.Capacity; i++)
+	{
+		reader >> newStud.Firstname;
+		reader >> newStud.Lastname;
+		string simpleDate;
+		reader >> simpleDate;
+		birthDay(simpleDate, newStud.Birthday);
+		reader >> newStud.Grade;
+		reader >> newStud.ID;
 
+		newClass.Data.push_back(newStud);
+	}
+	_class.push_back(newClass);
+
+	reader.close();
 }
+void birthDay(string simpleDate , Date& birthDay)
+{
+//birthDay modifying
+
+	string date;
+	size_t counter = 0;
+	for (char digit : simpleDate)
+	{
+		if (digit == '/') {
+			if (counter == 0)
+			//	birthDay.Year = date;
+			//else if (counter == 1)
+			//	birthDay.Month = date;
+			//else
+			//	birthDay.Day = date;
+			counter++;
+			date = "";
+			continue;
+		}
+		date += digit;
+
+	}
+}
+void RemoveClass(string className)
+{
+	for (Class rm : _class)
+		if (rm.ClassName == className)
+		{
+			_class.pop_back();
+			cout << "class " << className << " was removed successfully..!" << endl;
+			return;
+		}
+	cout << "!? : " << "there is no class called " << className << endl;
+}
+void RemoveClass()
+{
+	for (Class rm : _class)
+		if (rm.ClassName == thisClass)
+		{
+			_class.pop_back();
+			cout << "class " << thisClass << " was removed successfully..!" << endl;
+			thisClass = "";
+			selector == mainArea;
+
+			return;
+		}
+}
+
+
