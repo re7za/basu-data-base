@@ -15,9 +15,6 @@ using namespace std;
 
 //vector <Class> Database;
 
-enum area {mainArea, classArea};
-int selector = mainArea;
-
 vector <Class> _class;
 string thisClass;
 
@@ -108,7 +105,7 @@ int main()
 void Start()
 {
 	cout << "Wellcome to 'BASU DATA BASE'" << endl;
-
+	int selector;
 	//Continue until the user exits
 	while (true)
 	{
@@ -140,9 +137,9 @@ void templatePrinter()
 {
 	cout << endl;
 	cout << "**enter your command...";
-	if (selector == mainArea)
+	if (thisClass == "")
 		cout << "in the Main Area...!" << endl;
-	else if (selector == classArea)
+	else if (thisClass != "")
 		cout << "in the Class Area..." << setw(3) << "on class (<Class Name>) !" << endl;
 	cout << "-> ";
 }
@@ -193,7 +190,7 @@ int getIndexOfArea(string _command)
 {
 	//is command main part entered true?? or false?
 	
-	if (selector == mainArea)
+	if (thisClass == "")
 	{
 		toLowerCase(_command);
 		int index = 0;
@@ -210,7 +207,7 @@ int getIndexOfArea(string _command)
 			index++;
 		}
 	}
-	else if (selector == classArea)
+	else if (thisClass != "")
 	{
 		toLowerCase(_command);
 		int index = 0;
@@ -237,7 +234,7 @@ void toLowerCase(string& _command)
 }
 void runCommand(int index, string argument)
 {
-	if (selector == mainArea)
+	if (thisClass == "")
 		switch (index)
 		{
 		//basu add class <File Name>
@@ -280,12 +277,12 @@ void runCommand(int index, string argument)
 			return;
 		}
 		}
-	else if (selector == classArea)
+	else if (thisClass != "")
 		switch (index)
 		{
 		//basu select none
 		case 0: {
-			selector = mainArea;
+			thisClass = "";
 			break;
 		}
 		//basu add student
@@ -414,7 +411,6 @@ void RemoveClass()
 			_class.pop_back();
 			cout << "class " << thisClass << " was removed successfully..!" << endl;
 			thisClass = "";
-			selector == mainArea;
 
 			return;
 		}
