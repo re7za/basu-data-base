@@ -15,8 +15,30 @@ using namespace std;
 
 //vector <Class> Database;
 
-vector <Class> _class;
+struct Date
+{
+	unsigned short int Year;
+	unsigned short int Month;
+	unsigned short int Day;
+};
+struct Student
+{
+	string Firstname;
+	string Lastname;
+	unsigned long long int ID;
+	Date Birthday;
+	float Grade;
+};
+struct Class
+{
+	string ClassName;
+	float Average;
+	unsigned short int Capacity;
+	vector <Student> Data;
+};
+
 string thisClass;
+vector <Class> _class;
 
 //the commands bank must be accessible everywhere
 const short int mainAreaCommandsNumber = 8;
@@ -47,27 +69,6 @@ const string classAreaCommands[classAreaCommandsNumber] = {
 	"exit"
 };
 
-struct Date
-{
-	unsigned short int Year;
-	unsigned short int Month;
-	unsigned short int Day;
-};
-struct Student
-{
-	string Firstname;
-	string Lastname;
-	unsigned long long int ID;
-	Date Birthday;
-	float Grade;
-};
-struct Class
-{
-	string ClassName;
-	float Average;
-	unsigned short int Capacity;
-	vector <Student> Data;
-};
 
 void Start();
 void SelectClass(string);
@@ -140,7 +141,7 @@ void templatePrinter()
 	if (thisClass == "")
 		cout << "in the Main Area...!" << endl;
 	else if (thisClass != "")
-		cout << "in the Class Area..." << setw(3) << "on class (<Class Name>) !" << endl;
+		cout << "in the Class Area..." << setw(3) << " class '" << thisClass << "'" << endl;
 	cout << "-> ";
 }
 void commandSpliter(string _command, vector <string>& commandVec)
@@ -249,7 +250,7 @@ void runCommand(int index, string argument)
 		}
 		//basu select class <Class Name>
 		case 2: {
-			//SelectClass(argument);
+			SelectClass(argument);
 			break;
 		}
 		//basu show <Class Name> or nothing
@@ -371,19 +372,18 @@ void AddClass(string fileName)
 }
 void birthDay(string simpleDate , Date& birthDay)
 {
-//birthDay modifying
-
+	//birthDay modifying
 	string date;
 	size_t counter = 0;
 	for (char digit : simpleDate)
 	{
 		if (digit == '/') {
 			if (counter == 0)
-			//	birthDay.Year = date;
-			//else if (counter == 1)
-			//	birthDay.Month = date;
-			//else
-			//	birthDay.Day = date;
+				birthDay.Year = stoi(date);
+			else if (counter == 1)
+				birthDay.Month = stoi(date);
+			else
+				birthDay.Day = stoi(date);
 			counter++;
 			date = "";
 			continue;
@@ -394,26 +394,37 @@ void birthDay(string simpleDate , Date& birthDay)
 }
 void RemoveClass(string className)
 {
-	for (Class rm : _class)
-		if (rm.ClassName == className)
+	for (int i = 0; i < _class.size(); i++)
+		if (_class[i].ClassName == className)
 		{
-			_class.pop_back();
-			cout << "class " << className << " was removed successfully..!" << endl;
+			_class.erase(_class.begin() + i);
+			cout << "class '" << className << "' was removed successfully..!" << endl;
 			return;
 		}
-	cout << "!? : " << "there is no class called " << className << endl;
+	cout << "!? : " << "there is no class called '" << className << "'" << endl;
 }
 void RemoveClass()
 {
-	for (Class rm : _class)
-		if (rm.ClassName == thisClass)
+	for (int i = 0; i < _class.size(); i++)
+		if (_class[i].ClassName == thisClass)
 		{
-			_class.pop_back();
-			cout << "class " << thisClass << " was removed successfully..!" << endl;
+			_class.erase(_class.begin() + i);
+			cout << "class '" << thisClass << "' was removed successfully..!" << endl;
 			thisClass = "";
 
 			return;
 		}
 }
+void SelectClass(string className)
+{
+	for (Class selected : _class)
+		if (selected.ClassName == className)
+		{
+			thisClass = className;
+			return;
+		}
+	cout << "!? : " << "there is no class called '" << className << "'"<< endl;
+}
+
 
 
