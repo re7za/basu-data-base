@@ -70,7 +70,7 @@ struct Class
 
 void Start();
 void SelectClass(string);
-void AddClass(string);
+void AddClass(string, vector <Class>& _class);
 void RemoveClass(string);
 void RemoveClass();
 void AddStudent(string, Date, unsigned long long int, float);
@@ -91,7 +91,7 @@ void commandSpliter(string, vector <string>&);
 void commandModifire(string&, vector <string>&);
 int getIndexOfArea(string);
 void toLowerCase(string&);
-void runCommand(int, string, vector <Class>& );
+void runCommand(int, string, vector <Class>&);
 
 
 
@@ -240,7 +240,7 @@ void runCommand(int index, string argument, vector <Class>& _class)
 		{
 		//basu add class <File Name>
 		case 0: {
-			AddClass(argument);
+			AddClass(argument, _class);
 			break;
 		}
 		//basu remove class <Class Name>
@@ -342,7 +342,7 @@ void runCommand(int index, string argument, vector <Class>& _class)
 	}
 }
 
-void AddClass(string fileName)
+void AddClass(string fileName, vector <Class>& _class)
 {
 
 }
