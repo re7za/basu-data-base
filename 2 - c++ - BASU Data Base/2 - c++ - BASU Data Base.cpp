@@ -344,5 +344,11 @@ void runCommand(int index, string argument, vector <Class>& _class)
 
 void AddClass(string fileName, vector <Class>& _class)
 {
+	Class newClass;
+	ifstream reader(fileName.c_str(), ios::in | ios::beg);
+	if (!reader) {
+		cout << "<<SOMTHING WRONG!!!>>" << "   " << "file doesn't open!" << endl;
+		return;
+	}
 
 }
