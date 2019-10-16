@@ -140,9 +140,9 @@ void templatePrinter()
 	cout << endl;
 	cout << "**enter your command...";
 	if (thisClass == "")
-		cout << "in the Main Area...!" << endl;
+		cout << "in the 'Main-Area'...!" << endl;
 	else if (thisClass != "")
-		cout << "in the Class Area..." << setw(3) << " class '" << thisClass << "'" << endl;
+		cout << "in the Class-Area..." << setw(3) << " class ( " << thisClass << " ) :" << endl;
 	cout << "-> ";
 }
 void commandSpliter(string _command, vector <string>& commandVec)
@@ -325,7 +325,7 @@ void runCommand(int index, string argument)
 		}
 		//basu remove class
 		case 10: {
-			//RemoveClass();
+			RemoveClass();
 		}
 		//basu select class <Class Name>
 		case 11: {
@@ -345,15 +345,25 @@ void runCommand(int index, string argument)
 
 void AddClass(string fileName)
 {
+	
 	ifstream reader(fileName.c_str(), ios::beg);
 	if (!reader) {
-		cout << "!? : " << "<<SOMTHING WRONG!!!>>" << "   " << "file doesn't exist!" << endl;
+		cout << "!? : " << "<<SOMTHING WRONG!!!>>" << "   " << "there is no file named '" << fileName << "'..!" << endl;
 		return;
 	}
-	
+
 	Class newClass;
 	Student newStud;
 	reader >> newClass.ClassName;
+
+	//Prevent re-adding a file
+	for (Class temp : _class)
+		if (temp.ClassName == newClass.ClassName) {
+			cout << "!? : '" << fileName << "' is already exists..!" << endl;
+			reader.close();
+			return;
+		}
+
 	reader >> newClass.Capacity;
 	for (size_t i = 0; i < newClass.Capacity; i++)
 	{
@@ -370,16 +380,21 @@ void AddClass(string fileName)
 	newClass.Average = setAverage(newClass);
 	_class.push_back(newClass);
 
+	cout << "'" << fileName << "'" << " added successfully..!" << endl;
+
 	reader.close();
 }
 void birthDay(string simpleDate , Date& birthDay)
 {
 	//birthDay modifying
+
 	string date;
 	size_t counter = 0;
-	for (char digit : simpleDate)
+	for (size_t i = 0; i < simpleDate.size(); i++)
 	{
-		if (digit == '/') {
+		date += simpleDate[i];
+
+		if (simpleDate[i] == '/' || i == simpleDate.size() - 1) {
 			if (counter == 0)
 				birthDay.Year = stoi(date);
 			else if (counter == 1)
@@ -390,7 +405,6 @@ void birthDay(string simpleDate , Date& birthDay)
 			date = "";
 			continue;
 		}
-		date += digit;
 
 	}
 }
@@ -412,7 +426,7 @@ void RemoveClass(string className)
 			cout << "class '" << className << "' was removed successfully..!" << endl;
 			return;
 		}
-	cout << "!? : " << "there is no class called '" << className << "'" << endl;
+	cout << "!? : " << "there is no class named '" << className << "'..!" << endl;
 }
 void RemoveClass()
 {
@@ -422,7 +436,6 @@ void RemoveClass()
 			_class.erase(_class.begin() + i);
 			cout << "class '" << thisClass << "' was removed successfully..!" << endl;
 			thisClass = "";
-
 			return;
 		}
 }
@@ -432,10 +445,24 @@ void SelectClass(string className)
 		if (selected.ClassName == className)
 		{
 			thisClass = className;
+			cout << "class '" << className << "' was selected successfully..!" << endl;
 			return;
 		}
-	cout << "!? : " << "there is no class called '" << className << "'"<< endl;
+	cout << "!? : " << "there is no class called '" << className << "'..!"<< endl;
 }
 
 
+/*
 
+	for (Class cls : _class)
+	{
+		cout << cls.ClassName << endl << cls.Capacity << endl << cls.Average << endl;
+		for (Student data : cls.Data)
+		{
+			cout << data.Firstname << " " << data.Lastname << " "
+				<< data.Birthday.Year << "-" << data.Birthday.Month << "-" << data.Birthday.Day << " "
+				<< data.Grade << " " << data.ID << endl;
+		}
+	}
+
+*/
