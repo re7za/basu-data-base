@@ -237,6 +237,7 @@ void toLowerCase(string& _command)
 void runCommand(int index, string argument)
 {
 	if (thisClass == "")
+	{
 		switch (index)
 		{
 		//basu add class <File Name>
@@ -279,73 +280,71 @@ void runCommand(int index, string argument)
 			return;
 		}
 		}
-	else if (thisClass != "")
-		switch (index)
-		{
-		//basu select none
-		case 0: {
-			thisClass = "";
-			break;
-		}
-		//basu add student
-		case 1: {
 
-		}
-		//basu remove student <ID>
-		case 2: {
-
-		}
-		//basu search <ID> or <Full Name>
-		case 3: {
-
-		}
-		//basu show
-		case 4: {
-
-		}
-		//basu sort name
-		case 5: {
-			//SortByName();
-		}
-		//basu sort id
-		case 6: {
-			//SortByID();
-		}
-		//basu save
-		case 7: {
-			//Save();
-		}
-		//basu help
-		case 8: {
-			//Help();
-		}
-		//basu rank
-		case 9: {
-			//Rank();
-		}
-		//basu remove class
-		case 10: {
-			RemoveClass();
-		}
-		//basu select class <Class Name>
-		case 11: {
-			//SelectClass(argument);
-		}
-		//exit
-		case 12: {
-			return;
-		}
-		}
+	}
 	else
 	{
-		cout << "!? : " << "somthing wrong with selector" << endl;
-		return;
+		switch (index)
+				{
+				//basu select none
+				case 0: {
+					thisClass = "";
+					break;
+				}
+				//basu add student
+				case 1: {
+
+				}
+				//basu remove student <ID>
+				case 2: {
+
+				}
+				//basu search <ID> or <Full Name>
+				case 3: {
+
+				}
+				//basu show
+				case 4: {
+
+				}
+				//basu sort name
+				case 5: {
+					//SortByName();
+				}
+				//basu sort id
+				case 6: {
+					//SortByID();
+				}
+				//basu save
+				case 7: {
+					//Save();
+				}
+				//basu help
+				case 8: {
+					//Help();
+				}
+				//basu rank
+				case 9: {
+					//Rank();
+				}
+				//basu remove class
+				case 10: {
+					RemoveClass();
+				}
+				//basu select class <Class Name>
+				case 11: {
+					//SelectClass(argument);
+				}
+				//exit
+				case 12: {
+					return;
+				}
+				}
 	}
 }
 
 void AddClass(string fileName)
 {
-	
 	ifstream reader(fileName.c_str(), ios::beg);
 	if (!reader) {
 		cout << "!? : " << "<<SOMTHING WRONG!!!>>" << "   " << "there is no file named '" << fileName << "'..!" << endl;
@@ -466,3 +465,4 @@ void SelectClass(string className)
 	}
 
 */
+
