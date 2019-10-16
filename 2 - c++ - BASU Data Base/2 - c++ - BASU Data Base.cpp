@@ -37,7 +37,7 @@ struct Class
 	vector <Student> Data;
 };
 
-string thisClass;
+string thisClass = "";
 vector <Class> _class;
 
 //the commands bank must be accessible everywhere
@@ -107,7 +107,7 @@ int main()
 void Start()
 {
 	cout << "Wellcome to 'BASU DATA BASE'" << endl;
-	int selector;
+
 	//Continue until the user exits
 	while (true)
 	{
@@ -125,8 +125,15 @@ void Start()
 		commandModifire(command, commandVec);
 
 		int mainPartIndex = getIndexOfArea(command);
-		if (mainPartIndex == -1) {
+		if (mainPartIndex == -1)
+		{
 			cout << "!? : " << "<<WRONG INPUT!!!>>" << "   " << "enter 'basu help' to show command list.." << endl;
+			continue;
+		}
+		else if (mainPartIndex == -2)
+		{
+			cout << "!? : " << "your command does not available in this area..!" << endl
+				<< " enter 'basu help' to display commands list..!" << endl;
 			continue;
 		}
 		else
@@ -190,42 +197,60 @@ void commandModifire(string& _command,vector <string>& commandVec)
 }
 int getIndexOfArea(string _command)
 {
-	//is command main part entered true?? or false?
-	
-	if (thisClass == "")
+	//is command main part entered true?? or false? return index of command from its bank if true
+
+	int wtf = 0;		//was this command found in the other bank?
+	toLowerCase(_command);
+	int index = 0;
+	for (const string& mainCommands : mainAreaCommands)
 	{
-		toLowerCase(_command);
-		int index = 0;
-		for (const string& mainCommands : mainAreaCommands)
+		if (_command.size() < mainCommands.size())
 		{
-			if (_command.size() < mainCommands.size())
-				continue;
-			size_t mistakeCounter = 0;
-			for (size_t j = 0; j < mainCommands.size(); j++)
-				if (mainCommands[j] != _command[j])
-					mistakeCounter++;
-			if (mistakeCounter == 0)
-				return index;
 			index++;
+			continue;
 		}
+		short int mistakeCounter = 0;
+		for (size_t i = 0; i < mainCommands.size(); i++)
+			if (mainCommands[i] != _command[i])
+			{
+				mistakeCounter++;
+			}
+		if (mistakeCounter == 0)
+		{
+			if (thisClass == "")
+				return index;
+			else if (thisClass != "")
+				wtf++;
+		}
+		index++;
 	}
-	else if (thisClass != "")
+
+	index = 0;
+	for (const string& mainCommands : classAreaCommands)
 	{
-		toLowerCase(_command);
-		int index = 0;
-		for (const string& mainCommands : classAreaCommands)
+		if (_command.size() < mainCommands.size())
 		{
-			if (_command.size() < mainCommands.size())
-				continue;
-			size_t mistakeCounter = 0;
-			for (size_t i = 0; i < mainCommands.size(); i++)
-				if (mainCommands[i] != _command[i])
-					mistakeCounter++;
-			if (mistakeCounter == 0)
-				return index;
 			index++;
+			continue;
 		}
+		short int mistakeCounter = 0;
+		for (size_t i = 0; i < mainCommands.size(); i++)
+			if (mainCommands[i] != _command[i])
+			{
+				mistakeCounter++;
+				break;
+			}
+		if (mistakeCounter == 0)
+		{
+			if (thisClass != "")
+				return index;
+			else if (thisClass == "")
+				wtf++;
+		}
+		index++;
 	}
+	if (wtf != 0)
+		return -2;
 	return -1;
 }
 void toLowerCase(string& _command)
@@ -237,7 +262,6 @@ void toLowerCase(string& _command)
 void runCommand(int index, string argument)
 {
 	if (thisClass == "")
-	{
 		switch (index)
 		{
 		//basu add class <File Name>
@@ -280,67 +304,63 @@ void runCommand(int index, string argument)
 			return;
 		}
 		}
-
-	}
 	else
-	{
 		switch (index)
-				{
-				//basu select none
-				case 0: {
-					thisClass = "";
-					break;
-				}
-				//basu add student
-				case 1: {
+		{
+		//basu select none
+		case 0: {
+			thisClass = "";
+			break;
+		}
+		//basu add student
+		case 1: {
 
-				}
-				//basu remove student <ID>
-				case 2: {
+		}
+		//basu remove student <ID>
+		case 2: {
 
-				}
-				//basu search <ID> or <Full Name>
-				case 3: {
+		}
+		//basu search <ID> or <Full Name>
+		case 3: {
 
-				}
-				//basu show
-				case 4: {
+		}
+		//basu show
+		case 4: {
 
-				}
-				//basu sort name
-				case 5: {
-					//SortByName();
-				}
-				//basu sort id
-				case 6: {
-					//SortByID();
-				}
-				//basu save
-				case 7: {
-					//Save();
-				}
-				//basu help
-				case 8: {
-					//Help();
-				}
-				//basu rank
-				case 9: {
-					//Rank();
-				}
-				//basu remove class
-				case 10: {
-					RemoveClass();
-				}
-				//basu select class <Class Name>
-				case 11: {
-					//SelectClass(argument);
-				}
-				//exit
-				case 12: {
-					return;
-				}
-				}
-	}
+		}
+		//basu sort name
+		case 5: {
+			//SortByName();
+		}
+		//basu sort id
+		case 6: {
+			//SortByID();
+		}
+		//basu save
+		case 7: {
+			//Save();
+		}
+		//basu help
+		case 8: {
+			//Help();
+		}
+		//basu rank
+		case 9: {
+			//Rank();
+		}
+		//basu remove class
+		case 10: {
+			RemoveClass();
+		}
+		//basu select class <Class Name>
+		case 11: {
+			//SelectClass(argument);
+		}
+		//exit
+		case 12: {
+			return;
+		}
+		}
 }
 
 void AddClass(string fileName)
@@ -444,7 +464,7 @@ void SelectClass(string className)
 		if (selected.ClassName == className)
 		{
 			thisClass = className;
-			cout << "class '" << className << "' was selected successfully..!" << endl;
+			cout << "class '" << className << "' was selected..!" << endl;
 			return;
 		}
 	cout << "!? : " << "there is no class called '" << className << "'..!"<< endl;
