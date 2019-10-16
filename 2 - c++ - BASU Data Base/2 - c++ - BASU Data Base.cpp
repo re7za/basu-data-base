@@ -95,6 +95,7 @@ int getIndexOfArea(string);
 void toLowerCase(string&);
 void runCommand(int, string);
 void birthDay(string, Date&);
+float setAverage(Class&);
 
 
 int main()
@@ -366,6 +367,7 @@ void AddClass(string fileName)
 
 		newClass.Data.push_back(newStud);
 	}
+	newClass.Average = setAverage(newClass);
 	_class.push_back(newClass);
 
 	reader.close();
@@ -391,6 +393,15 @@ void birthDay(string simpleDate , Date& birthDay)
 		date += digit;
 
 	}
+}
+float setAverage(Class& newClass)
+{
+	float sum = 0;
+	for (Student data : newClass.Data)
+	{
+		sum += data.Grade;
+	}
+	return sum / newClass.Capacity;
 }
 void RemoveClass(string className)
 {
