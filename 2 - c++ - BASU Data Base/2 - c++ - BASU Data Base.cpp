@@ -147,7 +147,7 @@ void templatePrinter()
 	if (thisClass == "")
 		cout << "in the 'Main-Area'...!" << endl;
 	else if (thisClass != "")
-		cout << "in the Class-Area..." << setw(3) << " class ( " << thisClass << " ) :" << endl;
+		cout << "in the Class-Area... " << setw(3) << " class ( " << thisClass << " ) :" << endl;
 	cout << "-> ";
 }
 void commandSpliter(string _command, vector <string>& commandVec)
@@ -495,9 +495,10 @@ void AddStudent()
 	cout << "grade : ";
 	cin >> stud.Grade;
 	
-	for (Class cls : _class)
+	for (Class &cls : _class)
 		if (cls.ClassName == thisClass)
 		{
+			cls.Capacity++;
 			cls.Data.push_back(stud);
 			break;
 		}
@@ -507,23 +508,18 @@ void AddStudent()
 }
 void RemoveStudent(unsigned long long int id)
 {
-	for (Class cls : _class)
-	{
+	for (Class &cls : _class)
 		if (cls.ClassName == thisClass)
-		{
 			for (size_t i = 0; i < cls.Data.size(); i++)
-			{
 				if (cls.Data[i].ID == id)
 				{
 					cls.Data.erase(cls.Data.begin() + i);
 					cout << "Student '" << id << "' was removed successfully..!" << endl;
 					return;
 				}
-			}
-		}
-	}
 	cout << "!? : " << "there is no student by id '" << id << "'..!" << endl;
 }
+
 
 
 
