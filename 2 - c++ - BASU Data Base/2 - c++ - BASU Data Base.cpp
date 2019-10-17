@@ -478,7 +478,7 @@ void AddStudent()
 
 	cout << "enter his/her first name : ";
 	cin >> stud.Firstname;
-	/*cout << "last name : ";
+	cout << "last name : ";
 	cin >> stud.Lastname;
 	cout << "ID : ";
 	cin >> stud.ID;
@@ -494,15 +494,16 @@ void AddStudent()
 
 	cout << "grade : ";
 	cin >> stud.Grade;
-	*/
+	
 	for (Class cls : _class)
 		if (cls.ClassName == thisClass)
 		{
 			cls.Data.push_back(stud);
 			break;
 		}
-	
+
 	cout << endl << "the student was added to the class successfully..!" << endl;
+	cin.ignore();
 }
 void RemoveStudent(unsigned long long int id)
 {
