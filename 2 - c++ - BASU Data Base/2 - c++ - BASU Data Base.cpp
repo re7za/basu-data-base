@@ -147,7 +147,7 @@ void templatePrinter()
 	if (thisClass == "")
 		cout << "in the 'Main-Area'...!" << endl;
 	else if (thisClass != "")
-		cout << "in the Class-Area... " << setw(3) << " class ( " << thisClass << " ) :" << endl;
+		cout << "in the 'Class-Area'..." << " class ( " << thisClass << " ) ...!" << endl;
 	cout << "-> ";
 }
 void commandSpliter(string _command, vector <string>& commandVec)
@@ -280,9 +280,9 @@ void runCommand(int index, string argument)
 		//basu show <Class Name> or nothing
 		case 3: {
 			if (argument == "show")
-				//ShowAll();
-			//else
-				//ShowClass(argument);
+				ShowAll();
+			else
+				ShowClass(argument);
 			break;
 		}
 		//basu save
@@ -312,7 +312,6 @@ void runCommand(int index, string argument)
 		}
 		//basu add student
 		case 1: {
-
 			AddStudent();
 			break;
 		}
@@ -327,7 +326,8 @@ void runCommand(int index, string argument)
 		}
 		//basu show
 		case 4: {
-
+			ShowClass(argument);
+			break;
 		}
 		//basu sort name
 		case 5: {
@@ -356,7 +356,8 @@ void runCommand(int index, string argument)
 		}
 		//basu select class <Class Name>
 		case 11: {
-			//SelectClass(argument);
+			SelectClass(argument);
+			break;
 		}
 		//exit
 		case 12: {
@@ -426,7 +427,6 @@ void birthDay(string simpleDate , Date& birthDay)
 			date = "";
 			continue;
 		}
-
 	}
 }
 float setAverage(Class& newClass)
@@ -519,7 +519,56 @@ void RemoveStudent(unsigned long long int id)
 				}
 	cout << "!? : " << "there is no student by id '" << id << "'..!" << endl;
 }
+void ShowClass(string className)
+{
+	//basu show in main area
+	if (thisClass != "")
+		className = thisClass;
 
+	for (const Class cls : _class)
+		if (cls.ClassName == className)
+		{
+			cout << "class '" << cls.ClassName << "' :" << endl
+				<< "capacity : " << cls.Capacity << endl
+				<< "average : " << cls.Average << endl
+				<< "students :" << endl
+				<< "First Name" << "    " << "Last Name" << "     "
+				<< "Birthday" << "          " << "Average" << "       " << "ID" << endl;
+			for (const Student data : cls.Data)
+			{
+				cout << data.Firstname << setw(16) << data.Lastname << setw(11)
+					<< data.Birthday.Year << "-" << data.Birthday.Month << "-" << data.Birthday.Day << setw(13)
+					<< data.Grade << setw(20) << data.ID << endl;
+			}
+			return;
+		}
+
+	cout << "!? : " << "there is no class named '" << className << "'..!" << endl;
+}
+void ShowAll()
+{
+	if (_class.size() == 0)
+	{
+		cout << "!? : " << "there are no classes yet..!" << endl;
+		return;
+	}
+	for (const Class cls : _class)
+	{
+		cout << "class '" << cls.ClassName << "' :" << endl
+			<< "capacity : " << cls.Capacity << endl
+			<< "average : " << cls.Average << endl
+			<< "students :" << endl
+			<< "First Name" << "    " << "Last Name" << "     "
+			<< "Birthday" << "          " << "Average" << "        " << "ID" << endl;
+		for (const Student data : cls.Data)
+		{
+			cout << data.Firstname << setw(16) << data.Lastname << setw(11)
+				<< data.Birthday.Year << "-" << data.Birthday.Month << "-" << data.Birthday.Day << setw(13)
+				<< data.Grade << setw(20) << data.ID << endl;
+		}
+		cout << endl;
+	}
+}
 
 
 
