@@ -13,8 +13,6 @@
 
 using namespace std;
 
-//vector <Class> Database;
-
 struct Date
 {
 	unsigned short int Year;
@@ -75,7 +73,7 @@ void SelectClass(string);
 void AddClass(string);
 void RemoveClass(string);
 void RemoveClass();
-void AddStudent(string, Date, unsigned long long int, float);
+void AddStudent();
 void RemoveStudent(unsigned long long int);
 void Search(unsigned long long int);
 void Search(string, string);
@@ -132,8 +130,8 @@ void Start()
 		}
 		else if (mainPartIndex == -2)
 		{
-			cout << "!? : " << "your command does not available in this area..!" << endl
-				<< " enter 'basu help' to display commands list..!" << endl;
+			cout << "!? : " << "your command does not available in this area..!"
+				<< " enter 'basu help' to display command list..!" << endl;
 			continue;
 		}
 		else
@@ -160,7 +158,7 @@ void commandSpliter(string _command, vector <string>& commandVec)
 		size_t letterCounter = 0;
 		for (char letter : _command)
 		{
-			if (letter != '0') {
+			if (letter != '`') {
 				letterCounter++;
 				break;
 			}
@@ -171,15 +169,15 @@ void commandSpliter(string _command, vector <string>& commandVec)
 		//extract the words from the command and push them in the vector
 		string word;
 		for (char& letter : _command)
-			if (letter == '0')
+			if (letter == '`')
 				continue;
 			else if (letter == ' ') {
-				letter = '0';
+				letter = '`';
 				break;
 			}
 			else {
 				word += letter;
-				letter = '0';
+				letter = '`';
 			}
 		if (word.size() > 0)
 			commandVec.push_back(word);
@@ -315,10 +313,13 @@ void runCommand(int index, string argument)
 		//basu add student
 		case 1: {
 
+			AddStudent();
+			break;
 		}
 		//basu remove student <ID>
 		case 2: {
-
+			RemoveStudent(stoull(argument));
+			break;
 		}
 		//basu search <ID> or <Full Name>
 		case 3: {
@@ -351,6 +352,7 @@ void runCommand(int index, string argument)
 		//basu remove class
 		case 10: {
 			RemoveClass();
+			break;
 		}
 		//basu select class <Class Name>
 		case 11: {
@@ -358,11 +360,11 @@ void runCommand(int index, string argument)
 		}
 		//exit
 		case 12: {
-			return;
+			//return;
 		}
 		}
 }
-
+//another functions
 void AddClass(string fileName)
 {
 	ifstream reader(fileName.c_str(), ios::beg);
@@ -469,6 +471,59 @@ void SelectClass(string className)
 		}
 	cout << "!? : " << "there is no class called '" << className << "'..!"<< endl;
 }
+void AddStudent()
+{
+	cout << endl << "**student registration form ( " << thisClass << " )" << endl;
+	Student stud;
+
+	cout << "enter his/her first name : ";
+	cin >> stud.Firstname;
+	/*cout << "last name : ";
+	cin >> stud.Lastname;
+	cout << "ID : ";
+	cin >> stud.ID;
+
+	Date birthday;
+	cout << "Year of Birth : ";
+	cin >> birthday.Year;
+	cout << "month : ";
+	cin >> birthday.Month;
+	cout << "day : ";
+	cin >> birthday.Day;
+	stud.Birthday = birthday;
+
+	cout << "grade : ";
+	cin >> stud.Grade;
+	*/
+	for (Class cls : _class)
+		if (cls.ClassName == thisClass)
+		{
+			cls.Data.push_back(stud);
+			break;
+		}
+	
+	cout << endl << "the student was added to the class successfully..!" << endl;
+}
+void RemoveStudent(unsigned long long int id)
+{
+	for (Class cls : _class)
+	{
+		if (cls.ClassName == thisClass)
+		{
+			for (size_t i = 0; i < cls.Data.size(); i++)
+			{
+				if (cls.Data[i].ID == id)
+				{
+					cls.Data.erase(cls.Data.begin() + i);
+					cout << "Student '" << id << "' was removed successfully..!" << endl;
+					return;
+				}
+			}
+		}
+	}
+	cout << "!? : " << "there is no student by id '" << id << "'..!" << endl;
+}
+
 
 
 /*
