@@ -294,12 +294,12 @@ void runCommand(int index, string argument, string argument_1)
 			break;*/
 		}
 		//basu help
-		case 5: {/*
+		case 5: {
 			if (argument == "help")
 				Help();
 			else
 				cout << "!? : " << "<<WRONG INPUT!!!>>" << "   " << "enter 'basu help' to show command list.." << endl;
-			break;*/
+			break;
 		}
 		//basu rank
 		case 6: {/*
@@ -379,12 +379,12 @@ void runCommand(int index, string argument, string argument_1)
 			break;*/
 		}
 		//basu help
-		case 8: {/*
+		case 8: {
 			if (argument == "help")
 				Help();
 			else
 				cout << "!? : " << "<<WRONG INPUT!!!>>" << "   " << "enter 'basu help' to show command list.." << endl;
-			break;*/
+			break;
 		}
 		//basu rank
 		case 9: {/*
@@ -688,6 +688,35 @@ void Search(string Fname, string Lname)
 						}
 	cout << "!? : " << "there is no student with this name " << endl;
 }
+void Help()
+{
+	if (thisClass == "")
+	{
+		cout << endl;
+		cout << "allowed commands in the main area are : " << endl;
+		size_t i = 1;
+		for (const string command : mainAreaCommands)
+		{
+			if (i < 10)
+				cout << "0" << i++ << " ) " << command << endl;
+			else
+			cout << i++ << " ) " << command << endl;
+		}
+	}
+	else
+	{
+		cout << endl;
+		cout << "allowed commands in the class area are : " << endl;
+		size_t i = 1;
+		for (const string command : classAreaCommands)
+		{
+			if (i < 10)
+				cout << "0" << i++ << " ) " << command << endl;
+			else
+				cout << i++ << " ) " << command << endl;
+		}
+	}
 
+}
 
 
