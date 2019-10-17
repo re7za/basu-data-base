@@ -35,7 +35,7 @@ struct Class
 	vector <Student> Data;
 };
 
-string thisClass = "d";
+string thisClass = "";
 vector <Class> _class;
 
 //the commands bank must be accessible everywhere
@@ -655,14 +655,38 @@ void SortByID()
 							break;
 	cout << "students were sorted by ID successfully..!" << endl;
 }
-
 void Search(unsigned long long int id)
 {
-	cout << "by ID : " << id << endl;
+	for (Class& cls : _class)
+		if (cls.ClassName == thisClass)
+			for (size_t i = 0; i < cls.Data.size(); i++)
+				if (cls.Data[i].ID == id)
+				{
+					cout << endl;
+					cout << cls.Data[i].Firstname << " " << cls.Data[i].Lastname << " born in '"
+						<< cls.Data[i].Birthday.Year << "-" << cls.Data[i].Birthday.Month << "-"
+						<< cls.Data[i].Birthday.Day << "' with average '" << cls.Data[i].Grade
+						<< "' and ID '" << cls.Data[i].ID << "'" << endl;
+					return;
+				}
+	cout << "!? : " << "there is no student with ID '" << id << "'..!" << endl;
 }
 void Search(string Fname, string Lname)
 {
-	cout << "by name : " << Fname << " / " << Lname << endl;
+	for (Class& cls : _class)
+		if (cls.ClassName == thisClass)
+			for (size_t i = 0; i < cls.Data.size(); i++)
+				if (cls.Data[i].Firstname == Fname)
+					if (cls.Data[i].Lastname == Lname)
+						{
+							cout << endl;
+							cout << cls.Data[i].Firstname << " " << cls.Data[i].Lastname << " born in '"
+								<< cls.Data[i].Birthday.Year << "-" << cls.Data[i].Birthday.Month << "-"
+								<< cls.Data[i].Birthday.Day << "' with average '" << cls.Data[i].Grade
+								<< "' and ID '" << cls.Data[i].ID << "'" << endl;
+							return;
+						}
+	cout << "!? : " << "there is no student with this name " << endl;
 }
 
 
