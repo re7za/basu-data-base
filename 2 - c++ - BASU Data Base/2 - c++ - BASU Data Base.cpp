@@ -322,7 +322,7 @@ void runCommand(int index, string argument)
 		}
 		//basu search <ID> or <Full Name>
 		case 3: {
-
+			
 		}
 		//basu show
 		case 4: {
@@ -331,7 +331,8 @@ void runCommand(int index, string argument)
 		}
 		//basu sort name
 		case 5: {
-			//SortByName();
+			SortByName();
+			break;
 		}
 		//basu sort id
 		case 6: {
@@ -569,7 +570,25 @@ void ShowAll()
 		cout << endl;
 	}
 }
-
+void SortByName()
+{
+	//(hardCore)swapping
+	for (Class& cls : _class)
+		if (cls.ClassName == thisClass)
+			for (size_t studCounter1 = 0; studCounter1 < cls.Data.size() - 1; studCounter1++)
+				for (size_t studCounter2 = studCounter1; studCounter2 < cls.Data.size(); studCounter2++)
+					for (size_t letterCounter = 0; letterCounter < cls.Data[studCounter1].Firstname.size(); letterCounter++)
+						if (cls.Data[studCounter1].Firstname[letterCounter] > cls.Data[studCounter2].Firstname[letterCounter])
+						{
+							Student bubbleStud = cls.Data[studCounter1];
+							cls.Data[studCounter1] = cls.Data[studCounter2];
+							cls.Data[studCounter2] = bubbleStud;
+							break;
+						}
+						else if (cls.Data[studCounter1].Firstname[letterCounter] < cls.Data[studCounter2].Firstname[letterCounter])
+							break;
+	cout << "sorting done successfully..!" << endl;
+}
 
 
 /*
