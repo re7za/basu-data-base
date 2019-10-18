@@ -67,7 +67,6 @@ const string classAreaCommands[classAreaCommandsNumber] = {
 	"exit"
 };
 
-
 void Start();
 void SelectClass(string);
 void AddClass(string);
@@ -104,7 +103,6 @@ int main()
 	Start();
 	return 0;
 }
-
 void Start()
 {
 	cout << "Wellcome to 'BASU DATA BASE'" << endl;
@@ -138,7 +136,10 @@ void Start()
 			continue;
 		}
 		else
-			runCommand(mainPartIndex, commandVec[commandVec.size() - 1], commandVec[commandVec.size() - 2]);
+			if(commandVec.size() < 2)
+				runCommand(mainPartIndex, commandVec[commandVec.size() - 1] , "");
+			else
+				runCommand(mainPartIndex, commandVec[commandVec.size() - 1], commandVec[commandVec.size() - 2]);
 	}
 }
 
@@ -314,7 +315,7 @@ void runCommand(int index, string argument, string argument_1)
 		}
 		//exit
 		case 7: {
-			return;
+			exit(0);
 		}
 		}
 	else
@@ -412,7 +413,7 @@ void runCommand(int index, string argument, string argument_1)
 		}
 		//exit
 		case 12: {
-			//return;
+			exit(0);
 		}
 		}
 }
