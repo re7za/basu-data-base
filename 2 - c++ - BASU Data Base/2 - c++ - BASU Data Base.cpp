@@ -73,7 +73,7 @@ void SelectClass(string);
 void AddClass(string);
 void RemoveClass(string);
 void RemoveClass();
-void AddStudent();
+void AddStudent(string, Date, unsigned long long int, float);
 void RemoveStudent(unsigned long long int);
 void Search(unsigned long long int);
 void Search(string, string);
@@ -85,7 +85,6 @@ void Save();
 void Help();
 void Rank();
 
-
 void templatePrinter();
 void commandSpliter(string, vector <string>&);
 void commandModifire(string&, vector <string>&);
@@ -94,6 +93,7 @@ void toLowerCase(string&);
 void runCommand(int, string, string);
 void birthDay(string, Date&);
 float setAverage(const Class&);
+void getStudent();
 void printRanks(const Class&);
 void sortByGrade(Class&);
 
@@ -158,7 +158,7 @@ void commandSpliter(string _command, vector <string>& commandVec)
 	{
 		//if all characters are checked, exit
 		size_t letterCounter = 0;
-		for (char letter : _command)
+		for (const char letter : _command)
 		{
 			if (letter != '`') {
 				letterCounter++;
@@ -330,7 +330,7 @@ void runCommand(int index, string argument, string argument_1)
 		//basu add student
 		case 1: {
 			if (argument == "student")
-				AddStudent();
+				getStudent();
 			else
 				cout << "!? : " << "<<WRONG INPUT!!!>>" << "   " << "enter 'basu help' to show command list.." << endl;
 			break;
@@ -373,12 +373,12 @@ void runCommand(int index, string argument, string argument_1)
 			break;
 		}
 		//basu save
-		case 7: {/*
+		case 7: {
 			if (argument == "save")
 				Save();
 			else
 				cout << "!? : " << "<<WRONG INPUT!!!>>" << "   " << "enter 'basu help' to show command list.." << endl;
-			break;*/
+			break;
 		}
 		//basu help
 		case 8: {
@@ -521,17 +521,16 @@ void SelectClass(string className)
 		}
 	cout << "!? : " << "there is no class called '" << className << "'..!"<< endl;
 }
-void AddStudent()
+void getStudent()
 {
 	cout << endl << "**student registration form ( " << thisClass << " )" << endl;
-	Student stud;
 
-	cout << "enter his/her first name : ";
-	cin >> stud.Firstname;
-	cout << "last name : ";
-	cin >> stud.Lastname;
+	cout << "enter his/her full name : ";
+	string name;
+	getline(cin, name);
 	cout << "ID : ";
-	cin >> stud.ID;
+	unsigned long long int id;
+	cin >> id;
 
 	Date birthday;
 	cout << "Year of Birth : ";
@@ -540,12 +539,28 @@ void AddStudent()
 	cin >> birthday.Month;
 	cout << "day : ";
 	cin >> birthday.Day;
-	stud.Birthday = birthday;
 
 	cout << "grade : ";
-	cin >> stud.Grade;
+	float grade;
+	cin >> grade;
+
+	AddStudent(name, birthday, id, grade);
+}
+void AddStudent(string name, Date birthday, unsigned long long int id, float grade)
+{
+	Student stud;
 	
-	for (Class &cls : _class)
+	vector <string> Fname;
+	commandSpliter(name, Fname);
+	if (Fname.size() == 1)
+		stud.Firstname = Fname[0];
+	if (Fname.size() == 2)
+		stud.Lastname = Fname[1];
+	stud.Birthday = birthday;
+	stud.ID = id;
+	stud.Grade = grade;
+
+	for (Class& cls : _class)
 		if (cls.ClassName == thisClass)
 		{
 			cls.Capacity++;
@@ -732,6 +747,7 @@ void Rank()
 		sortByGrade(CLS);
 		printRanks(CLS);
 	}
+	
 }
 void sortByGrade(Class& cls)
 {
@@ -768,6 +784,13 @@ void printRanks(const Class& cls)
 	for (counter; counter < cls.Capacity && cls.Data[counter].Grade >= 0; counter++)
 		cout << "   " << cls.Data[counter].Firstname << " " << cls.Data[counter].Lastname << " " << cls.Data[counter].Grade << endl;
 	cout << endl;
+}
+void Save()
+{
+	if (thisClass != "")
+	{
+		cout << " ";
+	}
 }
 
 
