@@ -96,6 +96,7 @@ float setAverage(const Class&);
 void getStudent();
 void printRanks(const Class&);
 void sortByGrade(Class&);
+void fileCreater(string);
 
 
 int main()
@@ -859,10 +860,42 @@ void printRanks(const Class& cls)
 void Save()
 {
 	if (thisClass != "")
-	{
-		cout << " ";
-	}
+		fileCreater(thisClass);
+	else
+		for (const Class& cls : _class)
+		{
+			fileCreater(cls.ClassName);
+			cout << endl;
+		}
 }
+void fileCreater(string clsName)
+{
+	for (const Class& cls : _class)
+		if (cls.ClassName == clsName)
+		{
+			cout << "choose a name for the new file (changed file from '" << clsName << "' class) : ";
+			string newName;
+			getline(cin, newName);
 
+			ofstream writer(newName.c_str());
+			if (!writer)
+			{
+				cout << "!? : " << "<<SOMTHING WRONG!!!>>" << "   " << "an error occured with file creating..!" << endl;
+				return;
+			}
+
+			writer << cls.ClassName << endl;
+			writer << cls.Capacity << endl;
+			for (const Student& stud : cls.Data)
+			{
+				writer << stud.Firstname << " " << stud.Lastname << " "
+					<< stud.Birthday.Year << "/"
+					<< stud.Birthday.Month << "/"
+					<< stud.Birthday.Day << " "
+					<< stud.Grade << " " << stud.ID << endl;
+			}
+			cout << "the student was added to the class successfully..!" << endl;
+		}
+}
 
 
