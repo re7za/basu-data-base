@@ -458,7 +458,7 @@ void AddClass(string fileName)
 }
 void birthDay(string simpleDate , Date& birthDay)
 {
-	//birthDay modifying
+	//birthday modifying
 
 	string date;
 	size_t counter = 0;
@@ -525,37 +525,89 @@ void getStudent()
 {
 	cout << endl << "**student registration form ( " << thisClass << " )" << endl;
 
-	cout << "enter his/her full name : ";
 	string name;
-	getline(cin, name);
-	cout << "ID : ";
+	while (true)
+	{
+		cout << "enter his/her full name : ";
+		getline(cin, name);
+		size_t err = 0;
+		for (char i : name)
+			if (!((i >= 65 && i <= 90) || (i >= 97 && i <= 122) || (i == ' ')))
+			{
+				err++;
+				break;
+			}
+		if (err == 0)
+			break;
+		else
+			cout << "!? : " << "number not allowed..!!!" << endl;
+	}
+
 	unsigned long long int id;
-	cin >> id;
+	while (true)
+	{
+		cout << "ID : ";
+		cin >> id;
+		if (id > 999999999 && id < 10000000000)
+			break;
+		else
+			cout << "!? : " << "id must be exactly '10' digits..!!!" << endl;
+	}
 
+	cin.ignore();
 	Date birthday;
-	cout << "Year of Birth : ";
-	cin >> birthday.Year;
-	cout << "month : ";
-	cin >> birthday.Month;
-	cout << "day : ";
-	cin >> birthday.Day;
+	string _birth;
+	cout << "Birthday (yyyy/mm/dd) : ";
+	getline(cin, _birth);
+	//modifying
+	string date;
+	size_t counter = 0;
+	for (size_t i = 0; i < _birth.size(); i++)
+	{
+		date += _birth[i];
 
-	cout << "grade : ";
+		if (_birth[i] == '/' || i == _birth.size() - 1) {
+			if (counter == 0)
+				birthday.Year = stoi(date);
+			else if (counter == 1)
+				birthday.Month = stoi(date);
+			else
+				birthday.Day = stoi(date);
+			counter++;
+			date = "";
+			continue;
+		}
+	}
+
 	float grade;
-	cin >> grade;
+	while (true)
+	{
+		cout << "Grade : ";
+		cin >> grade;
+		if (grade <= 20 && grade >= 0)
+			break;
+		else
+			cout << "!? : " << "the grade should be from 0 to 20..!!!" << endl;
+	}
 
 	AddStudent(name, birthday, id, grade);
 }
 void AddStudent(string name, Date birthday, unsigned long long int id, float grade)
 {
 	Student stud;
-	
+
 	vector <string> Fname;
 	commandSpliter(name, Fname);
-	if (Fname.size() == 1)
+
+	if (Fname.size() >= 1)
 		stud.Firstname = Fname[0];
-	if (Fname.size() == 2)
+	if (Fname.size() >= 2)
 		stud.Lastname = Fname[1];
+	if (Fname.size() >= 3)
+		stud.Lastname += " " + Fname[2];
+	if (Fname.size() >= 4)
+		stud.Lastname += " " + Fname[3];
+
 	stud.Birthday = birthday;
 	stud.ID = id;
 	stud.Grade = grade;
@@ -565,6 +617,7 @@ void AddStudent(string name, Date birthday, unsigned long long int id, float gra
 		{
 			cls.Capacity++;
 			cls.Data.push_back(stud);
+			cls.Average = setAverage(cls);
 			break;
 		}
 
@@ -598,7 +651,7 @@ void ShowClass(string className)
 				<< "average : " << cls.Average << endl
 				<< "students :" << endl
 				<< "First Name" << "    " << "Last Name" << "     "
-				<< "Birthday" << "          " << "Average" << "       " << "ID" << endl;
+				<< "Birthday" << "          " << "Grade" << "          " << "ID" << endl;
 			for (const Student data : cls.Data)
 			{
 				cout << data.Firstname << setw(16) << data.Lastname << setw(11)
@@ -624,7 +677,7 @@ void ShowAll()
 			<< "average : " << cls.Average << endl
 			<< "students :" << endl
 			<< "First Name" << "    " << "Last Name" << "     "
-			<< "Birthday" << "          " << "Average" << "        " << "ID" << endl;
+			<< "Birthday" << "          " << "Grade" << "           " << "ID" << endl;
 		for (const Student data : cls.Data)
 		{
 			cout << data.Firstname << setw(16) << data.Lastname << setw(11)
