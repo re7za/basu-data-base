@@ -86,7 +86,7 @@ void Rank();
 
 void templatePrinter();
 void commandSpliter(string, vector <string>&);
-void commandModifire(string&, vector <string>&);
+void commandModifire(string&, vector <const string>&);
 int getIndexOfArea(string);
 void toLowerCase(string&);
 void runCommand(int, string, string);
@@ -158,7 +158,7 @@ void commandSpliter(string _command, vector <string>& commandVec)
 {
 	while (true)
 	{
-		//if all characters are checked, exit
+		//if all characters were checked, exit
 		size_t letterCounter = 0;
 		for (const char letter : _command)
 		{
@@ -183,12 +183,14 @@ void commandSpliter(string _command, vector <string>& commandVec)
 				word += letter;
 				letter = '`';
 			}
+		//if there is a word, push it back to commandVec
 		if (word.size() > 0)
 			commandVec.push_back(word);
 	}
 }
-void commandModifire(string& _command,vector <string>& commandVec)
+void commandModifire(string& _command,vector <const string>& commandVec)
 {
+	//re-create a standard command
 	_command = "";
 	for (size_t i = 0; i < commandVec.size(); i++)
 	{
@@ -431,7 +433,7 @@ void AddClass(string fileName)
 	reader >> newClass.ClassName;
 
 	//Prevent re-adding a file
-	for (Class temp : _class)
+	for (const Class& temp : _class)
 		if (temp.ClassName == newClass.ClassName) {
 			cout << "!? : '" << fileName << "' is already exists..!" << endl;
 			reader.close();
@@ -439,6 +441,7 @@ void AddClass(string fileName)
 		}
 
 	reader >> newClass.Capacity;
+	
 	for (size_t i = 0; i < newClass.Capacity; i++)
 	{
 		reader >> newStud.Firstname;
@@ -451,7 +454,9 @@ void AddClass(string fileName)
 
 		newClass.Data.push_back(newStud);
 	}
+
 	newClass.Average = setAverage(newClass);
+
 	_class.push_back(newClass);
 
 	cout << "'" << fileName << "'" << " added successfully..!" << endl;
@@ -514,7 +519,7 @@ void RemoveClass()
 }
 void SelectClass(string className)
 {
-	for (Class selected : _class)
+	for (const Class& selected : _class)
 		if (selected.ClassName == className)
 		{
 			thisClass = className;
@@ -633,7 +638,7 @@ void RemoveStudent(unsigned long long int id)
 			for (size_t i = 0; i < cls.Data.size(); i++)
 				if (cls.Data[i].ID == id)
 				{
-					cls.Capacity++;
+					cls.Capacity--;
 					cls.Data.erase(cls.Data.begin() + i);
 					cls.Average = setAverage(cls);
 					cout << "Student '" << id << "' was removed successfully..!" << endl;
@@ -647,7 +652,7 @@ void ShowClass(string className)
 	if (thisClass != "")
 		className = thisClass;
 
-	for (const Class cls : _class)
+	for (const Class& cls : _class)
 		if (cls.ClassName == className)
 		{
 			cout << "class '" << cls.ClassName << "' :" << endl
@@ -656,7 +661,7 @@ void ShowClass(string className)
 				<< "students :" << endl
 				<< "First Name" << "    " << "Last Name" << "     "
 				<< "Birthday" << "          " << "Grade" << "          " << "ID" << endl;
-			for (const Student data : cls.Data)
+			for (const Student& data : cls.Data)
 			{
 				cout << data.Firstname << setw(16) << data.Lastname << setw(11)
 					<< data.Birthday.Year << "-" << data.Birthday.Month << "-" << data.Birthday.Day << setw(13)
@@ -674,7 +679,7 @@ void ShowAll()
 		cout << "!? : " << "there are no classes yet..!" << endl;
 		return;
 	}
-	for (const Class cls : _class)
+	for (const Class& cls : _class)
 	{
 		cout << "class '" << cls.ClassName << "' :" << endl
 			<< "capacity : " << cls.Capacity << endl
@@ -682,7 +687,7 @@ void ShowAll()
 			<< "students :" << endl
 			<< "First Name" << "    " << "Last Name" << "     "
 			<< "Birthday" << "          " << "Grade" << "           " << "ID" << endl;
-		for (const Student data : cls.Data)
+		for (const Student& data : cls.Data)
 		{
 			cout << data.Firstname << setw(16) << data.Lastname << setw(11)
 				<< data.Birthday.Year << "-" << data.Birthday.Month << "-" << data.Birthday.Day << setw(13)
@@ -728,7 +733,7 @@ void SortByID()
 }
 void Search(unsigned long long int id)
 {
-	for (Class& cls : _class)
+	for (const Class& cls : _class)
 		if (cls.ClassName == thisClass)
 			for (size_t i = 0; i < cls.Data.size(); i++)
 				if (cls.Data[i].ID == id)
@@ -744,7 +749,7 @@ void Search(unsigned long long int id)
 }
 void Search(string Fname, string Lname)
 {
-	for (Class& cls : _class)
+	for (const Class& cls : _class)
 		if (cls.ClassName == thisClass)
 			for (size_t i = 0; i < cls.Data.size(); i++)
 				if (cls.Data[i].Firstname == Fname)
@@ -766,7 +771,7 @@ void Help()
 		cout << endl;
 		cout << "allowed commands in the main area are : " << endl;
 		size_t i = 1;
-		for (const string command : mainAreaCommands)
+		for (const string& command : mainAreaCommands)
 		{
 			if (i < 10)
 				cout << "0" << i++ << " ) " << command << endl;
@@ -779,7 +784,7 @@ void Help()
 		cout << endl;
 		cout << "allowed commands in the class area are : " << endl;
 		size_t i = 1;
-		for (const string command : classAreaCommands)
+		for (const string& command : classAreaCommands)
 		{
 			if (i < 10)
 				cout << "0" << i++ << " ) " << command << endl;
@@ -794,7 +799,7 @@ void Rank()
 	if (thisClass != "")
 	{
 		Class CLS;
-		for (const Class SLS : _class)
+		for (const Class& SLS : _class)
 			if (SLS.ClassName == thisClass)
 			{
 				CLS = SLS;
@@ -809,7 +814,7 @@ void Rank()
 		Class bubbleCls;
 		bubbleCls.ClassName = "all Classe";
 		bubbleCls.Capacity = 0;
-		//make copy from All students
+		//make copies from All students
 		for (const Class& cls : _class)
 			for (const Student& stud : cls.Data)
 			{
@@ -896,6 +901,8 @@ void fileCreater(string clsName)
 					<< stud.Grade << " " << stud.ID << endl;
 			}
 			cout << "the student was added to the class successfully..!" << endl;
+
+			writer.close();
 		}
 }
 
