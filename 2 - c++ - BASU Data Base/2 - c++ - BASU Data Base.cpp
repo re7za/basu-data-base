@@ -93,7 +93,9 @@ int getIndexOfArea(string);
 void toLowerCase(string&);
 void runCommand(int, string, string);
 void birthDay(string, Date&);
-float setAverage(Class&);
+float setAverage(const Class&);
+void printRanks(const Class&);
+void sortByGrade(Class&);
 
 
 int main()
@@ -387,12 +389,12 @@ void runCommand(int index, string argument, string argument_1)
 			break;
 		}
 		//basu rank
-		case 9: {/*
+		case 9: {
 			if (argument == "rank")
 				Rank();
 			else
 				cout << "!? : " << "<<WRONG INPUT!!!>>" << "   " << "enter 'basu help' to show command list.." << endl;
-			break;*/
+			break;
 		}
 		//basu remove class
 		case 10: {
@@ -477,12 +479,12 @@ void birthDay(string simpleDate , Date& birthDay)
 		}
 	}
 }
-float setAverage(Class& newClass)
+float setAverage(const Class& newClass)
 {
 	float sum = 0;
-	for (Student data : newClass.Data)
+	for (const Student& stud : newClass.Data)
 	{
-		sum += data.Grade;
+		sum += stud.Grade;
 	}
 	return sum / newClass.Capacity;
 }
@@ -649,10 +651,7 @@ void SortByID()
 							Student bubbleStud = cls.Data[studCounter1];
 							cls.Data[studCounter1] = cls.Data[studCounter2];
 							cls.Data[studCounter2] = bubbleStud;
-							break;
 						}
-						else if (cls.Data[studCounter1].ID < cls.Data[studCounter2].ID)
-							break;
 	cout << "students were sorted by ID successfully..!" << endl;
 }
 void Search(unsigned long long int id)
@@ -718,5 +717,58 @@ void Help()
 	}
 
 }
+void Rank()
+{
+	if (thisClass != "")
+	{
+		Class CLS;
+		for (const Class SLS : _class)
+			if (SLS.ClassName == thisClass)
+			{
+				CLS = SLS;
+				break;
+			}
+
+		sortByGrade(CLS);
+		printRanks(CLS);
+	}
+}
+void sortByGrade(Class& cls)
+{
+	for (size_t studCounter1 = 0; studCounter1 < cls.Data.size() - 1; studCounter1++)
+		for (size_t studCounter2 = studCounter1; studCounter2 < cls.Data.size(); studCounter2++)
+			if (cls.Data[studCounter1].Grade < cls.Data[studCounter2].Grade)
+			{
+				//swapping
+				Student bubbleStud = cls.Data[studCounter1];
+				cls.Data[studCounter1] = cls.Data[studCounter2];
+				cls.Data[studCounter2] = bubbleStud;
+			}
+}
+void printRanks(const Class& cls)
+{
+	//just for one class
+
+	size_t counter;
+	cout << endl;
+	cout << "in class '" << thisClass << "' :" << endl;
+	cout << "rank A )" << endl;
+	for (counter = 0; counter < cls.Capacity && cls.Data[counter].Grade >= 18; counter++)
+		cout << "   " << cls.Data[counter].Firstname << " " << cls .Data[counter].Lastname << " " << cls.Data[counter].Grade << endl;
+	cout << endl << "rank B )" << endl;
+	for (counter; counter < cls.Capacity && cls.Data[counter].Grade >= 15; counter++)
+		cout << "   " << cls.Data[counter].Firstname << " " << cls.Data[counter].Lastname << " " << cls.Data[counter].Grade << endl;
+	cout << endl << "rank C )" << endl;
+	for (counter; counter < cls.Capacity && cls.Data[counter].Grade >= 12; counter++)
+		cout << "   " << cls.Data[counter].Firstname << " " << cls.Data[counter].Lastname << " " << cls.Data[counter].Grade << endl;
+	cout << endl << "rank D )" << endl;
+	for (counter; counter < cls.Capacity && cls.Data[counter].Grade >= 10; counter++)
+		cout << "   " << cls.Data[counter].Firstname << " " << cls.Data[counter].Lastname << " " << cls.Data[counter].Grade << endl;
+	cout << endl << "rank E )" << endl;
+	for (counter; counter < cls.Capacity && cls.Data[counter].Grade >= 0; counter++)
+		cout << "   " << cls.Data[counter].Firstname << " " << cls.Data[counter].Lastname << " " << cls.Data[counter].Grade << endl;
+	cout << endl;
+}
+
 
 
