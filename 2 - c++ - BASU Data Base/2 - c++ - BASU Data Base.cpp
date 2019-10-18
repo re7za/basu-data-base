@@ -288,12 +288,12 @@ void runCommand(int index, string argument, string argument_1)
 			break;
 		}
 		//basu save
-		case 4: {/*
+		case 4: {
 			if (argument == "save")
 				Save();
 			else
 				cout << "!? : " << "<<WRONG INPUT!!!>>" << "   " << "enter 'basu help' to show command list.." << endl;
-			break;*/
+			break;
 		}
 		//basu help
 		case 5: {
@@ -304,12 +304,12 @@ void runCommand(int index, string argument, string argument_1)
 			break;
 		}
 		//basu rank
-		case 6: {/*
+		case 6: {
 			if (argument == "rank")
 				Rank();
 			else
 				cout << "!? : " << "<<WRONG INPUT!!!>>" << "   " << "enter 'basu help' to show command list.." << endl;
-			break;*/
+			break;
 		}
 		//exit
 		case 7: {
@@ -631,7 +631,9 @@ void RemoveStudent(unsigned long long int id)
 			for (size_t i = 0; i < cls.Data.size(); i++)
 				if (cls.Data[i].ID == id)
 				{
+					cls.Capacity++;
 					cls.Data.erase(cls.Data.begin() + i);
+					cls.Average = setAverage(cls);
 					cout << "Student '" << id << "' was removed successfully..!" << endl;
 					return;
 				}
@@ -800,7 +802,23 @@ void Rank()
 		sortByGrade(CLS);
 		printRanks(CLS);
 	}
-	
+	else
+	{
+		Class bubbleCls;
+		bubbleCls.ClassName = "all Classe";
+		bubbleCls.Capacity = 0;
+		//make copy from All students
+		for (const Class& cls : _class)
+			for (const Student& stud : cls.Data)
+			{
+				bubbleCls.Capacity++;
+				bubbleCls.Data.push_back(stud);
+			}
+
+		bubbleCls.Average = setAverage(bubbleCls);
+		sortByGrade(bubbleCls);
+		printRanks(bubbleCls);
+	}
 }
 void sortByGrade(Class& cls)
 {
