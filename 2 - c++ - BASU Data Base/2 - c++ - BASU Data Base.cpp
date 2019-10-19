@@ -998,7 +998,7 @@ void fileCreater(string clsName)
 					<< stud.Birthday.Day << " "
 					<< stud.Grade << " " << stud.ID << endl;
 			}
-			cout << "=> : " << "the student was added to the class successfully..!" << endl;
+			cout << "=> : " << "the '" << newName << "' was created successfully..!" << endl;
 
 			writer.close();
 		}
