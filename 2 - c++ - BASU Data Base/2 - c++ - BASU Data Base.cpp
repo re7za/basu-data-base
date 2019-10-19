@@ -530,12 +530,12 @@ void SelectClass(string className)
 }
 void getStudent()
 {
-	cout << endl << "**student registration form ( " << thisClass << " )" << endl;
+	cout << endl << "**student registration form ( " << thisClass << " )**" << endl;
 
 	string name;
 	while (true)
 	{
-		cout << "enter his/her full name : ";
+		cout << "_" << "enter his/her full name : ";
 		getline(cin, name);
 		size_t err = 0;
 		for (char i : name)
@@ -553,7 +553,7 @@ void getStudent()
 	unsigned long long int id;
 	while (true)
 	{
-		cout << "ID : ";
+		cout << "_" << "ID : ";
 		cin >> id;
 		if (id > 999999999 && id < 10000000000)
 			break;
@@ -564,7 +564,7 @@ void getStudent()
 	cin.ignore();
 	Date birthday;
 	string _birth;
-	cout << "Birthday (yyyy/mm/dd) : ";
+	cout << "_" << "Birthday (yyyy/mm/dd) : ";
 	getline(cin, _birth);
 	//modifying
 	string date;
@@ -589,7 +589,7 @@ void getStudent()
 	float grade;
 	while (true)
 	{
-		cout << "Grade : ";
+		cout << "_" << "Grade : ";
 		cin >> grade;
 		if (grade <= 20 && grade >= 0)
 			break;
@@ -655,7 +655,7 @@ void ShowClass(string className)
 	for (const Class& cls : _class)
 		if (cls.ClassName == className)
 		{
-			cout << "class '" << cls.ClassName << "' :" << endl
+			cout << endl << "class '" << cls.ClassName << "' )" << endl
 				<< "capacity : " << cls.Capacity << endl
 				<< "average : " << cls.Average << endl
 				<< "students :" << endl
@@ -681,7 +681,7 @@ void ShowAll()
 	}
 	for (const Class& cls : _class)
 	{
-		cout << "class '" << cls.ClassName << "' :" << endl
+		cout << endl << "class '" << cls.ClassName << "' )" << endl
 			<< "capacity : " << cls.Capacity << endl
 			<< "average : " << cls.Average << endl
 			<< "students :" << endl
@@ -699,21 +699,119 @@ void ShowAll()
 void SortByName()
 {
 	//hard core
+	//this is a smart system
 	for (Class& cls : _class)
 		if (cls.ClassName == thisClass)
 			for (size_t studCounter1 = 0; studCounter1 < cls.Data.size() - 1; studCounter1++)
 				for (size_t studCounter2 = studCounter1; studCounter2 < cls.Data.size(); studCounter2++)
+				{
+					size_t similar = 0;
 					for (size_t letterCounter = 0; letterCounter < cls.Data[studCounter1].Firstname.size(); letterCounter++)
-						if (cls.Data[studCounter1].Firstname[letterCounter] > cls.Data[studCounter2].Firstname[letterCounter])
+					{
+						char i = cls.Data[studCounter1].Firstname[letterCounter];
+						char j = cls.Data[studCounter2].Firstname[letterCounter];
+						if ((i >= 65 && i <= 90) && (j >= 65 && j <= 90) || (i >= 97 && i <= 122) && (j >= 97 && j <= 122))
 						{
-							//swapping
-							Student bubbleStud = cls.Data[studCounter1];
-							cls.Data[studCounter1] = cls.Data[studCounter2];
-							cls.Data[studCounter2] = bubbleStud;
-							break;
+							if (i > j)
+							{
+								//swapping
+								Student bubbleStud = cls.Data[studCounter1];
+								cls.Data[studCounter1] = cls.Data[studCounter2];
+								cls.Data[studCounter2] = bubbleStud;
+								break;
+							}
+							else if (i < j)
+								break;
+							//if (i == j) similar++... and then if (similar == cls.Data[studCounter1].Firstname.size) compare Lastnames
+							else
+								similar++;
 						}
-						else if (cls.Data[studCounter1].Firstname[letterCounter] < cls.Data[studCounter2].Firstname[letterCounter])
-							break;
+						else if ((i >= 97 && i <= 122) && (j >= 65 && j <= 90))
+						{
+							if (i - 32 > j)
+							{
+								//swapping
+								Student bubbleStud = cls.Data[studCounter1];
+								cls.Data[studCounter1] = cls.Data[studCounter2];
+								cls.Data[studCounter2] = bubbleStud;
+								break;
+							}
+							else if (i - 32 < j)
+								break;
+							else
+								similar++;
+						}
+						else if ((i >= 65 && i <= 90) && (j >= 97 && j <= 122))
+						{
+							if (i > j - 32)
+							{
+								//swapping
+								Student bubbleStud = cls.Data[studCounter1];
+								cls.Data[studCounter1] = cls.Data[studCounter2];
+								cls.Data[studCounter2] = bubbleStud;
+								break;
+							}
+							else if (i < j - 32)
+								break;
+							else
+								similar++;
+						}
+					}
+					if (similar == cls.Data[studCounter1].Firstname.size())
+					{
+						for (size_t letterCounter = 0; letterCounter < cls.Data[studCounter1].Lastname.size(); letterCounter++)
+						{
+							char i = cls.Data[studCounter1].Lastname[letterCounter];
+							char j = cls.Data[studCounter2].Lastname[letterCounter];
+							if ((i >= 65 && i <= 90) && (j >= 65 && j <= 90) || (i >= 97 && i <= 122) && (j >= 97 && j <= 122))
+							{
+								if (i > j)
+								{
+									//swapping
+									Student bubbleStud = cls.Data[studCounter1];
+									cls.Data[studCounter1] = cls.Data[studCounter2];
+									cls.Data[studCounter2] = bubbleStud;
+									break;
+								}
+								else if (i < j)
+									break;
+								//if (i == j) similar++... and then if (similar == cls.Data[studCounter1].Firstname.size) compare Lastnames
+								else
+									similar++;
+							}
+							else if ((i >= 97 && i <= 122) && (j >= 65 && j <= 90))
+							{
+								if (i - 32 > j)
+								{
+									//swapping
+									Student bubbleStud = cls.Data[studCounter1];
+									cls.Data[studCounter1] = cls.Data[studCounter2];
+									cls.Data[studCounter2] = bubbleStud;
+									break;
+								}
+								else if (i - 32 < j)
+									break;
+								else
+									similar++;
+							}
+							else if ((i >= 65 && i <= 90) && (j >= 97 && j <= 122))
+							{
+								if (i > j - 32)
+								{
+									//swapping
+									Student bubbleStud = cls.Data[studCounter1];
+									cls.Data[studCounter1] = cls.Data[studCounter2];
+									cls.Data[studCounter2] = bubbleStud;
+									break;
+								}
+								else if (i < j - 32)
+									break;
+								else
+									similar++;
+							}
+						}
+					}
+				}
 	cout << "=> : " << "students were sorted by name successfully..!" << endl;
 }
 void SortByID()
@@ -905,5 +1003,6 @@ void fileCreater(string clsName)
 			writer.close();
 		}
 }
+
 
 
