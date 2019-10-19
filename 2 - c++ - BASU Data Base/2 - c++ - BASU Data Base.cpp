@@ -497,7 +497,7 @@ float setAverage(const Class& newClass)
 }
 void RemoveClass(string className)
 {
-	for (int i = 0; i < _class.size(); i++)
+	for (size_t i = 0; i < _class.size(); i++)
 		if (_class[i].ClassName == className)
 		{
 			_class.erase(_class.begin() + i);
@@ -508,7 +508,7 @@ void RemoveClass(string className)
 }
 void RemoveClass()
 {
-	for (int i = 0; i < _class.size(); i++)
+	for (size_t i = 0; i < _class.size(); i++)
 		if (_class[i].ClassName == thisClass)
 		{
 			_class.erase(_class.begin() + i);
@@ -860,7 +860,7 @@ void Search(string Fname, string Lname)
 								<< "' and ID '" << cls.Data[i].ID << "'" << endl;
 							return;
 						}
-	cout << "!? : " << "there is no student with this name " << endl;
+	cout << "!? : " << "there is no student with this name..!" << endl;
 }
 void Help()
 {
@@ -977,7 +977,7 @@ void fileCreater(string clsName)
 	for (const Class& cls : _class)
 		if (cls.ClassName == clsName)
 		{
-			cout << "choose a name for the new file (changed file from '" << clsName << "' class) : ";
+			cout << "_choose a name for the new file (changed file from '" << clsName << "' class) : ";
 			string newName;
 			getline(cin, newName);
 
@@ -1003,6 +1003,5 @@ void fileCreater(string clsName)
 			writer.close();
 		}
 }
-
 
 
