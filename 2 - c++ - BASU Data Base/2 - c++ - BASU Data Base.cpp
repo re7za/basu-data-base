@@ -86,7 +86,7 @@ void Rank();
 
 void templatePrinter();
 void commandSpliter(string, vector <string>&);
-void commandModifire(string&, vector <const string>&);
+void commandModifier(string&, const vector <string>&);
 int getIndexOfArea(string);
 void toLowerCase(string&);
 void runCommand(int, string, string);
@@ -121,7 +121,7 @@ void Start()
 		commandSpliter(command, commandVec);
 
 		//remove the extra spaces
-		commandModifire(command, commandVec);
+		commandModifier(command, commandVec);
 
 		int mainPartIndex = getIndexOfArea(command);
 		if (mainPartIndex == -1)
@@ -188,7 +188,7 @@ void commandSpliter(string _command, vector <string>& commandVec)
 			commandVec.push_back(word);
 	}
 }
-void commandModifire(string& _command,vector <const string>& commandVec)
+void commandModifier(string& _command,const vector <string>& commandVec)
 {
 	//re-create a standard command
 	_command = "";
@@ -459,7 +459,7 @@ void AddClass(string fileName)
 
 	_class.push_back(newClass);
 
-	cout << "'" << fileName << "'" << " added successfully..!" << endl;
+	cout << "=> : " << "'" << fileName << "'" << " added successfully..!" << endl;
 
 	reader.close();
 }
@@ -501,7 +501,7 @@ void RemoveClass(string className)
 		if (_class[i].ClassName == className)
 		{
 			_class.erase(_class.begin() + i);
-			cout << "class '" << className << "' was removed successfully..!" << endl;
+			cout << "=> : " << "class '" << className << "' was removed successfully..!" << endl;
 			return;
 		}
 	cout << "!? : " << "there is no class named '" << className << "'..!" << endl;
@@ -512,7 +512,7 @@ void RemoveClass()
 		if (_class[i].ClassName == thisClass)
 		{
 			_class.erase(_class.begin() + i);
-			cout << "class '" << thisClass << "' was removed successfully..!" << endl;
+			cout << "=> : " << "class '" << thisClass << "' was removed successfully..!" << endl;
 			thisClass = "";
 			return;
 		}
@@ -523,7 +523,7 @@ void SelectClass(string className)
 		if (selected.ClassName == className)
 		{
 			thisClass = className;
-			cout << "class '" << className << "' was selected..!" << endl;
+			cout << "=> : " << "class '" << className << "' was selected..!" << endl;
 			return;
 		}
 	cout << "!? : " << "there is no class called '" << className << "'..!"<< endl;
@@ -628,7 +628,7 @@ void AddStudent(string name, Date birthday, unsigned long long int id, float gra
 			break;
 		}
 
-	cout << endl << "the student was added to the class successfully..!" << endl;
+	cout << endl << "=> : " << "the student was added to the class successfully..!" << endl;
 	cin.ignore();
 }
 void RemoveStudent(unsigned long long int id)
@@ -641,7 +641,7 @@ void RemoveStudent(unsigned long long int id)
 					cls.Capacity--;
 					cls.Data.erase(cls.Data.begin() + i);
 					cls.Average = setAverage(cls);
-					cout << "Student '" << id << "' was removed successfully..!" << endl;
+					cout << "=> : " << "Student '" << id << "' was removed successfully..!" << endl;
 					return;
 				}
 	cout << "!? : " << "there is no student by id '" << id << "'..!" << endl;
@@ -714,7 +714,7 @@ void SortByName()
 						}
 						else if (cls.Data[studCounter1].Firstname[letterCounter] < cls.Data[studCounter2].Firstname[letterCounter])
 							break;
-	cout << "students were sorted by name successfully..!" << endl;
+	cout << "=> : " << "students were sorted by name successfully..!" << endl;
 }
 void SortByID()
 {
@@ -729,7 +729,7 @@ void SortByID()
 							cls.Data[studCounter1] = cls.Data[studCounter2];
 							cls.Data[studCounter2] = bubbleStud;
 						}
-	cout << "students were sorted by ID successfully..!" << endl;
+	cout << "=> : " << "students were sorted by ID successfully..!" << endl;
 }
 void Search(unsigned long long int id)
 {
@@ -900,7 +900,7 @@ void fileCreater(string clsName)
 					<< stud.Birthday.Day << " "
 					<< stud.Grade << " " << stud.ID << endl;
 			}
-			cout << "the student was added to the class successfully..!" << endl;
+			cout << "=> : " << "the student was added to the class successfully..!" << endl;
 
 			writer.close();
 		}
