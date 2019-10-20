@@ -20,7 +20,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{B6EDB4FE-C303-48B3-AEA1-7139EEAB0992}</ProjectGuid>
+    <ProjectGuid>{EFB72414-E24F-42D0-A14D-1725A4DD1953}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>My2cBASUDataBase</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>

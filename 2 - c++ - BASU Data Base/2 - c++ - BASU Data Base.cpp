@@ -5,7 +5,6 @@
 //BASU Data Base
 //Final Edition
 
-
 #include <iostream>
 #include <fstream>
 #include <iomanip>
@@ -40,7 +39,7 @@ string thisClass = "";
 vector <Class> _class;
 
 //the commands bank must be accessible everywhere
-const short int mainAreaCommandsNumber = 8;
+const short int mainAreaCommandsNumber = 10;
 const string mainAreaCommands[mainAreaCommandsNumber] = {
 	"basu add class",
 	"basu remove class",
@@ -49,6 +48,8 @@ const string mainAreaCommands[mainAreaCommandsNumber] = {
 	"basu save",
 	"basu help",
 	"basu rank",
+	"basu sort name",
+	"basu sort id",
 	"exit"
 };
 const short int classAreaCommandsNumber = 13;
@@ -90,6 +91,8 @@ void commandSpliter(string, vector <string>&);
 void commandModifier(string&, const vector <string>&);
 int getIndexOfArea(string);
 void toLowerCase(string&);
+void nameSorting(Class&);
+void idSorting(Class&);
 void runCommand(int, string, string);
 void birthDay(string, Date&);
 float setAverage(const Class&);
@@ -316,8 +319,24 @@ void runCommand(int index, string argument, string argument_1)
 				cout << "!? : " << "<<WRONG INPUT!!!>>" << "   " << "enter 'basu help' to show command list.." << endl;
 			break;
 		}
-				//exit
+		//basu sort name
 		case 7: {
+			if (argument == "name")
+				SortByName();
+			else
+				cout << "!? : " << "<<WRONG INPUT!!!>>" << "   " << "enter 'basu help' to show command list.." << endl;
+			break;
+		}
+		//basu sort id
+		case 8: {
+			if (argument == "id")
+				SortByID();
+			else
+				cout << "!? : " << "<<WRONG INPUT!!!>>" << "   " << "enter 'basu help' to show command list.." << endl;
+			break;
+		}
+		//exit
+		case 9: {
 			exit(0);
 		}
 		}
@@ -713,136 +732,68 @@ void ShowAll()
 }
 void SortByName()
 {
-	//hard core
-	//this is a smart system
-	for (Class& cls : _class)
-		if (cls.ClassName == thisClass)
-			for (size_t studCounter1 = 0; studCounter1 < cls.Data.size() - 1; studCounter1++)
-				for (size_t studCounter2 = studCounter1; studCounter2 < cls.Data.size(); studCounter2++)
-				{
-					size_t similar = 0;
-					for (size_t letterCounter = 0; letterCounter < cls.Data[studCounter1].Firstname.size(); letterCounter++)
-					{
-						char i = cls.Data[studCounter1].Firstname[letterCounter];
-						char j = cls.Data[studCounter2].Firstname[letterCounter];
-						if ((i >= 65 && i <= 90) && (j >= 65 && j <= 90) || (i >= 97 && i <= 122) && (j >= 97 && j <= 122))
-						{
-							if (i > j)
-							{
-								//swapping
-								Student bubbleStud = cls.Data[studCounter1];
-								cls.Data[studCounter1] = cls.Data[studCounter2];
-								cls.Data[studCounter2] = bubbleStud;
-								break;
-							}
-							else if (i < j)
-								break;
-							//if (i == j) similar++... and then if (similar == cls.Data[studCounter1].Firstname.size) compare Lastnames
-							else
-								similar++;
-						}
-						else if ((i >= 97 && i <= 122) && (j >= 65 && j <= 90))
-						{
-							if (i - 32 > j)
-							{
-								//swapping
-								Student bubbleStud = cls.Data[studCounter1];
-								cls.Data[studCounter1] = cls.Data[studCounter2];
-								cls.Data[studCounter2] = bubbleStud;
-								break;
-							}
-							else if (i - 32 < j)
-								break;
-							else
-								similar++;
-						}
-						else if ((i >= 65 && i <= 90) && (j >= 97 && j <= 122))
-						{
-							if (i > j - 32)
-							{
-								//swapping
-								Student bubbleStud = cls.Data[studCounter1];
-								cls.Data[studCounter1] = cls.Data[studCounter2];
-								cls.Data[studCounter2] = bubbleStud;
-								break;
-							}
-							else if (i < j - 32)
-								break;
-							else
-								similar++;
-						}
-					}
-					if (similar == cls.Data[studCounter1].Firstname.size())
-					{
-						for (size_t letterCounter = 0; letterCounter < cls.Data[studCounter1].Lastname.size(); letterCounter++)
-						{
-							char i = cls.Data[studCounter1].Lastname[letterCounter];
-							char j = cls.Data[studCounter2].Lastname[letterCounter];
-							if ((i >= 65 && i <= 90) && (j >= 65 && j <= 90) || (i >= 97 && i <= 122) && (j >= 97 && j <= 122))
-							{
-								if (i > j)
-								{
-									//swapping
-									Student bubbleStud = cls.Data[studCounter1];
-									cls.Data[studCounter1] = cls.Data[studCounter2];
-									cls.Data[studCounter2] = bubbleStud;
-									break;
-								}
-								else if (i < j)
-									break;
-								//if (i == j) similar++... and then if (similar == cls.Data[studCounter1].Firstname.size) compare Lastnames
-								else
-									similar++;
-							}
-							else if ((i >= 97 && i <= 122) && (j >= 65 && j <= 90))
-							{
-								if (i - 32 > j)
-								{
-									//swapping
-									Student bubbleStud = cls.Data[studCounter1];
-									cls.Data[studCounter1] = cls.Data[studCounter2];
-									cls.Data[studCounter2] = bubbleStud;
-									break;
-								}
-								else if (i - 32 < j)
-									break;
-								else
-									similar++;
-							}
-							else if ((i >= 65 && i <= 90) && (j >= 97 && j <= 122))
-							{
-								if (i > j - 32)
-								{
-									//swapping
-									Student bubbleStud = cls.Data[studCounter1];
-									cls.Data[studCounter1] = cls.Data[studCounter2];
-									cls.Data[studCounter2] = bubbleStud;
-									break;
-								}
-								else if (i < j - 32)
-									break;
-								else
-									similar++;
-							}
-						}
-					}
-				}
+	if (thisClass != "")
+	{
+		for (Class& cls : _class)
+			if (cls.ClassName == thisClass)
+			{
+				nameSorting(cls);
+				break;
+			}
+	}
+	else
+		for (Class& cls : _class)
+			nameSorting(cls);
+
 	cout << "=> : " << "students were sorted by name successfully..!" << endl;
+}
+void nameSorting(Class& cls)
+{
+	for (size_t studCounter1 = 0; studCounter1 < cls.Data.size() - 1; studCounter1++)
+		for (size_t studCounter2 = studCounter1 + 1; studCounter2 < cls.Data.size(); studCounter2++)
+		{
+			string Fname1 = cls.Data[studCounter1].Firstname + " " + cls.Data[studCounter1].Lastname;
+			string Fname2 = cls.Data[studCounter2].Firstname + " " + cls.Data[studCounter2].Lastname;
+
+			toLowerCase(Fname1);
+			toLowerCase(Fname2);
+			if (Fname1 > Fname2)
+			{
+				//swapping
+				Student bubbleStud = cls.Data[studCounter1];
+				cls.Data[studCounter1] = cls.Data[studCounter2];
+				cls.Data[studCounter2] = bubbleStud;
+			}
+		}
 }
 void SortByID()
 {
-	for (Class& cls : _class)
-		if (cls.ClassName == thisClass)
-			for (size_t studCounter1 = 0; studCounter1 < cls.Data.size() - 1; studCounter1++)
-				for (size_t studCounter2 = studCounter1; studCounter2 < cls.Data.size(); studCounter2++)
-					if (cls.Data[studCounter1].ID > cls.Data[studCounter2].ID)
-					{
-						//swapping
-						Student bubbleStud = cls.Data[studCounter1];
-						cls.Data[studCounter1] = cls.Data[studCounter2];
-						cls.Data[studCounter2] = bubbleStud;
-					}
+	if (thisClass != "")
+	{
+		for (Class& cls : _class)
+			if (cls.ClassName == thisClass)
+			{
+				idSorting(cls);
+				break;
+			}
+	}
+	else
+		for (Class& cls : _class)
+			idSorting(cls);
+
 	cout << "=> : " << "students were sorted by ID successfully..!" << endl;
+}
+void idSorting(Class& cls)
+{
+	for (size_t studCounter1 = 0; studCounter1 < cls.Data.size() - 1; studCounter1++)
+		for (size_t studCounter2 = studCounter1; studCounter2 < cls.Data.size(); studCounter2++)
+			if (cls.Data[studCounter1].ID > cls.Data[studCounter2].ID)
+			{
+				//swapping
+				Student bubbleStud = cls.Data[studCounter1];
+				cls.Data[studCounter1] = cls.Data[studCounter2];
+				cls.Data[studCounter2] = bubbleStud;
+			}
 }
 void Search(unsigned long long int id)
 {
@@ -1036,4 +987,4 @@ void fileCreater(string clsName)
 		}
 }
 
-
+//cout << "the end";
