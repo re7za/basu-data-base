@@ -1,8 +1,9 @@
-﻿//syd reza qaemi
+//syd reza qaemi
 //9712358033
 //TA Project
 //The Second Project
 //BASU Data Base
+//Final Edition
 
 
 #include <iostream>
@@ -136,8 +137,8 @@ void Start()
 			continue;
 		}
 		else
-			if(commandVec.size() < 2)
-				runCommand(mainPartIndex, commandVec[commandVec.size() - 1] , "");
+			if (commandVec.size() < 2)
+				runCommand(mainPartIndex, commandVec[commandVec.size() - 1], "");
 			else
 				runCommand(mainPartIndex, commandVec[commandVec.size() - 1], commandVec[commandVec.size() - 2]);
 	}
@@ -154,7 +155,7 @@ void templatePrinter()
 		cout << "in the 'Class-Area'..." << " class ( " << thisClass << " ) ...!" << endl;
 	cout << "-> ";
 }
-void commandSpliter(string _command, vector <string>& commandVec)
+void commandSpliter(string _command, vector <string> & commandVec)
 {
 	while (true)
 	{
@@ -188,7 +189,7 @@ void commandSpliter(string _command, vector <string>& commandVec)
 			commandVec.push_back(word);
 	}
 }
-void commandModifier(string& _command,const vector <string>& commandVec)
+void commandModifier(string & _command, const vector <string> & commandVec)
 {
 	//re-create a standard command
 	_command = "";
@@ -257,7 +258,7 @@ int getIndexOfArea(string _command)
 		return -2;
 	return -1;
 }
-void toLowerCase(string& _command)
+void toLowerCase(string & _command)
 {
 	for (char& letter : _command)
 		if (letter >= 65 && letter <= 90)
@@ -268,22 +269,22 @@ void runCommand(int index, string argument, string argument_1)
 	if (thisClass == "")
 		switch (index)
 		{
-		//basu add class <File Name>
+			//basu add class <File Name>
 		case 0: {
 			AddClass(argument);
 			break;
 		}
-		//basu remove class <Class Name>
+				//basu remove class <Class Name>
 		case 1: {
 			RemoveClass(argument);
 			break;
 		}
-		//basu select class <Class Name>
+				//basu select class <Class Name>
 		case 2: {
 			SelectClass(argument);
 			break;
 		}
-		//basu show <Class Name> or nothing
+				//basu show <Class Name> or nothing
 		case 3: {
 			if (argument == "show")
 				ShowAll();
@@ -291,7 +292,7 @@ void runCommand(int index, string argument, string argument_1)
 				ShowClass(argument);
 			break;
 		}
-		//basu save
+				//basu save
 		case 4: {
 			if (argument == "save")
 				Save();
@@ -299,7 +300,7 @@ void runCommand(int index, string argument, string argument_1)
 				cout << "!? : " << "<<WRONG INPUT!!!>>" << "   " << "enter 'basu help' to show command list.." << endl;
 			break;
 		}
-		//basu help
+				//basu help
 		case 5: {
 			if (argument == "help")
 				Help();
@@ -307,7 +308,7 @@ void runCommand(int index, string argument, string argument_1)
 				cout << "!? : " << "<<WRONG INPUT!!!>>" << "   " << "enter 'basu help' to show command list.." << endl;
 			break;
 		}
-		//basu rank
+				//basu rank
 		case 6: {
 			if (argument == "rank")
 				Rank();
@@ -315,7 +316,7 @@ void runCommand(int index, string argument, string argument_1)
 				cout << "!? : " << "<<WRONG INPUT!!!>>" << "   " << "enter 'basu help' to show command list.." << endl;
 			break;
 		}
-		//exit
+				//exit
 		case 7: {
 			exit(0);
 		}
@@ -323,7 +324,7 @@ void runCommand(int index, string argument, string argument_1)
 	else
 		switch (index)
 		{
-		//basu select none
+			//basu select none
 		case 0: {
 			if (argument == "none")
 				thisClass = "";
@@ -331,7 +332,7 @@ void runCommand(int index, string argument, string argument_1)
 				cout << "!? : " << "<<WRONG INPUT!!!>>" << "   " << "enter 'basu help' to show command list.." << endl;
 			break;
 		}
-		//basu add student
+				//basu add student
 		case 1: {
 			if (argument == "student")
 				getStudent();
@@ -339,12 +340,12 @@ void runCommand(int index, string argument, string argument_1)
 				cout << "!? : " << "<<WRONG INPUT!!!>>" << "   " << "enter 'basu help' to show command list.." << endl;
 			break;
 		}
-		//basu remove student <ID>
+				//basu remove student <ID>
 		case 2: {
 			RemoveStudent(stoull(argument));
 			break;
 		}
-		//basu search <ID> or <Full Name>
+				//basu search <ID> or <Full Name>
 		case 3: {
 			if (argument_1 == "search")
 				Search(stoull(argument));
@@ -352,7 +353,7 @@ void runCommand(int index, string argument, string argument_1)
 				Search(argument_1, argument);
 			break;
 		}
-		//basu show
+				//basu show
 		case 4: {
 			if (argument == "show")
 				ShowClass(argument);
@@ -360,7 +361,7 @@ void runCommand(int index, string argument, string argument_1)
 				cout << "!? : " << "<<WRONG INPUT!!!>>" << "   " << "enter 'basu help' to show command list.." << endl;
 			break;
 		}
-		//basu sort name
+				//basu sort name
 		case 5: {
 			if (argument == "name")
 				SortByName();
@@ -368,7 +369,7 @@ void runCommand(int index, string argument, string argument_1)
 				cout << "!? : " << "<<WRONG INPUT!!!>>" << "   " << "enter 'basu help' to show command list.." << endl;
 			break;
 		}
-		//basu sort id
+				//basu sort id
 		case 6: {
 			if (argument == "id")
 				SortByID();
@@ -376,7 +377,7 @@ void runCommand(int index, string argument, string argument_1)
 				cout << "!? : " << "<<WRONG INPUT!!!>>" << "   " << "enter 'basu help' to show command list.." << endl;
 			break;
 		}
-		//basu save
+				//basu save
 		case 7: {
 			if (argument == "save")
 				Save();
@@ -384,7 +385,7 @@ void runCommand(int index, string argument, string argument_1)
 				cout << "!? : " << "<<WRONG INPUT!!!>>" << "   " << "enter 'basu help' to show command list.." << endl;
 			break;
 		}
-		//basu help
+				//basu help
 		case 8: {
 			if (argument == "help")
 				Help();
@@ -392,7 +393,7 @@ void runCommand(int index, string argument, string argument_1)
 				cout << "!? : " << "<<WRONG INPUT!!!>>" << "   " << "enter 'basu help' to show command list.." << endl;
 			break;
 		}
-		//basu rank
+				//basu rank
 		case 9: {
 			if (argument == "rank")
 				Rank();
@@ -400,7 +401,7 @@ void runCommand(int index, string argument, string argument_1)
 				cout << "!? : " << "<<WRONG INPUT!!!>>" << "   " << "enter 'basu help' to show command list.." << endl;
 			break;
 		}
-		//basu remove class
+				//basu remove class
 		case 10: {
 			if (argument == "class")
 				RemoveClass();
@@ -408,12 +409,12 @@ void runCommand(int index, string argument, string argument_1)
 				cout << "!? : " << "<<WRONG INPUT!!!>>" << "   " << "enter 'basu help' to show command list.." << endl;
 			break;
 		}
-		//basu select class <Class Name>
+				 //basu select class <Class Name>
 		case 11: {
 			SelectClass(argument);
 			break;
 		}
-		//exit
+				 //exit
 		case 12: {
 			exit(0);
 		}
@@ -441,7 +442,7 @@ void AddClass(string fileName)
 		}
 
 	reader >> newClass.Capacity;
-	
+
 	for (size_t i = 0; i < newClass.Capacity; i++)
 	{
 		reader >> newStud.Firstname;
@@ -463,7 +464,7 @@ void AddClass(string fileName)
 
 	reader.close();
 }
-void birthDay(string simpleDate , Date& birthDay)
+void birthDay(string simpleDate, Date & birthDay)
 {
 	//birthday modifying
 
@@ -486,7 +487,7 @@ void birthDay(string simpleDate , Date& birthDay)
 		}
 	}
 }
-float setAverage(const Class& newClass)
+float setAverage(const Class & newClass)
 {
 	float sum = 0;
 	for (const Student& stud : newClass.Data)
@@ -497,6 +498,13 @@ float setAverage(const Class& newClass)
 }
 void RemoveClass(string className)
 {
+	//are there any classes???
+	if (_class.size() == 0)
+	{
+		cout << "!? : " << "there are no classes to remove..!" << endl;
+		return;
+	}
+
 	for (size_t i = 0; i < _class.size(); i++)
 		if (_class[i].ClassName == className)
 		{
@@ -519,6 +527,13 @@ void RemoveClass()
 }
 void SelectClass(string className)
 {
+	//are there any classes???
+	if (_class.size() == 0)
+	{
+		cout << "!? : " << "there are no classes to select..!" << endl;
+		return;
+	}
+
 	for (const Class& selected : _class)
 		if (selected.ClassName == className)
 		{
@@ -526,7 +541,7 @@ void SelectClass(string className)
 			cout << "=> : " << "class '" << className << "' was selected..!" << endl;
 			return;
 		}
-	cout << "!? : " << "there is no class called '" << className << "'..!"<< endl;
+	cout << "!? : " << "there is no class called '" << className << "'..!" << endl;
 }
 void getStudent()
 {
@@ -633,7 +648,7 @@ void AddStudent(string name, Date birthday, unsigned long long int id, float gra
 }
 void RemoveStudent(unsigned long long int id)
 {
-	for (Class &cls : _class)
+	for (Class& cls : _class)
 		if (cls.ClassName == thisClass)
 			for (size_t i = 0; i < cls.Data.size(); i++)
 				if (cls.Data[i].ID == id)
@@ -676,7 +691,7 @@ void ShowAll()
 {
 	if (_class.size() == 0)
 	{
-		cout << "!? : " << "there are no classes yet..!" << endl;
+		cout << "!? : " << "there are no classes to show..!" << endl;
 		return;
 	}
 	for (const Class& cls : _class)
@@ -820,13 +835,13 @@ void SortByID()
 		if (cls.ClassName == thisClass)
 			for (size_t studCounter1 = 0; studCounter1 < cls.Data.size() - 1; studCounter1++)
 				for (size_t studCounter2 = studCounter1; studCounter2 < cls.Data.size(); studCounter2++)
-						if (cls.Data[studCounter1].ID > cls.Data[studCounter2].ID)
-						{
-							//swapping
-							Student bubbleStud = cls.Data[studCounter1];
-							cls.Data[studCounter1] = cls.Data[studCounter2];
-							cls.Data[studCounter2] = bubbleStud;
-						}
+					if (cls.Data[studCounter1].ID > cls.Data[studCounter2].ID)
+					{
+						//swapping
+						Student bubbleStud = cls.Data[studCounter1];
+						cls.Data[studCounter1] = cls.Data[studCounter2];
+						cls.Data[studCounter2] = bubbleStud;
+					}
 	cout << "=> : " << "students were sorted by ID successfully..!" << endl;
 }
 void Search(unsigned long long int id)
@@ -843,7 +858,7 @@ void Search(unsigned long long int id)
 						<< "' and ID '" << cls.Data[i].ID << "'" << endl;
 					return;
 				}
-	cout << "!? : " << "there is no student with ID '" << id << "'..!" << endl;
+	cout << "!? : " << "there is no student by ID '" << id << "'..!" << endl;
 }
 void Search(string Fname, string Lname)
 {
@@ -852,35 +867,36 @@ void Search(string Fname, string Lname)
 			for (size_t i = 0; i < cls.Data.size(); i++)
 				if (cls.Data[i].Firstname == Fname)
 					if (cls.Data[i].Lastname == Lname)
-						{
-							cout << endl;
-							cout << cls.Data[i].Firstname << " " << cls.Data[i].Lastname << " born in '"
-								<< cls.Data[i].Birthday.Year << "-" << cls.Data[i].Birthday.Month << "-"
-								<< cls.Data[i].Birthday.Day << "' with average '" << cls.Data[i].Grade
-								<< "' and ID '" << cls.Data[i].ID << "'" << endl;
-							return;
-						}
+					{
+						cout << endl;
+						cout << cls.Data[i].Firstname << " " << cls.Data[i].Lastname << " born in '"
+							<< cls.Data[i].Birthday.Year << "-" << cls.Data[i].Birthday.Month << "-"
+							<< cls.Data[i].Birthday.Day << "' with average '" << cls.Data[i].Grade
+							<< "' and ID '" << cls.Data[i].ID << "'" << endl;
+						return;
+					}
 	cout << "!? : " << "there is no student with this name..!" << endl;
 }
 void Help()
 {
+
 	if (thisClass == "")
 	{
 		cout << endl;
-		cout << "allowed commands in the main area are : " << endl;
+		cout << "allowed commands in the main area :" << endl;
 		size_t i = 1;
 		for (const string& command : mainAreaCommands)
 		{
 			if (i < 10)
 				cout << "0" << i++ << " ) " << command << endl;
 			else
-			cout << i++ << " ) " << command << endl;
+				cout << i++ << " ) " << command << endl;
 		}
 	}
 	else
 	{
 		cout << endl;
-		cout << "allowed commands in the class area are : " << endl;
+		cout << "allowed commands in the class area :" << endl;
 		size_t i = 1;
 		for (const string& command : classAreaCommands)
 		{
@@ -909,6 +925,13 @@ void Rank()
 	}
 	else
 	{
+		//are there any classes???
+		if (_class.size() == 0)
+		{
+			cout << "!? : " << "there are no classes to show their rank..!" << endl;
+			return;
+		}
+
 		Class bubbleCls;
 		bubbleCls.ClassName = "all Classe";
 		bubbleCls.Capacity = 0;
@@ -925,7 +948,7 @@ void Rank()
 		printRanks(bubbleCls);
 	}
 }
-void sortByGrade(Class& cls)
+void sortByGrade(Class & cls)
 {
 	for (size_t studCounter1 = 0; studCounter1 < cls.Data.size() - 1; studCounter1++)
 		for (size_t studCounter2 = studCounter1; studCounter2 < cls.Data.size(); studCounter2++)
@@ -937,7 +960,7 @@ void sortByGrade(Class& cls)
 				cls.Data[studCounter2] = bubbleStud;
 			}
 }
-void printRanks(const Class& cls)
+void printRanks(const Class & cls)
 {
 	//just for one class
 
@@ -946,7 +969,7 @@ void printRanks(const Class& cls)
 	cout << "in class '" << thisClass << "' :" << endl;
 	cout << "rank A )" << endl;
 	for (counter = 0; counter < cls.Capacity && cls.Data[counter].Grade >= 18; counter++)
-		cout << "   " << cls.Data[counter].Firstname << " " << cls .Data[counter].Lastname << " " << cls.Data[counter].Grade << endl;
+		cout << "   " << cls.Data[counter].Firstname << " " << cls.Data[counter].Lastname << " " << cls.Data[counter].Grade << endl;
 	cout << endl << "rank B )" << endl;
 	for (counter; counter < cls.Capacity && cls.Data[counter].Grade >= 15; counter++)
 		cout << "   " << cls.Data[counter].Firstname << " " << cls.Data[counter].Lastname << " " << cls.Data[counter].Grade << endl;
@@ -966,11 +989,20 @@ void Save()
 	if (thisClass != "")
 		fileCreater(thisClass);
 	else
+	{
+		//are there any classes???
+		if (_class.size() == 0)
+		{
+			cout << "!? : " << "there are no classes to save..!" << endl;
+			return;
+		}
+
 		for (const Class& cls : _class)
 		{
 			fileCreater(cls.ClassName);
 			cout << endl;
 		}
+	}
 }
 void fileCreater(string clsName)
 {
